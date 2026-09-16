@@ -1,0 +1,33 @@
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+.venv/
+venv/
+env/
+neuro_venv/
+
+# Data and generated matrices
+*.npy
+nilearn_data/
+nilearn_cache/
+
+# Generated plots/images
+mat_plot*
+*.png
+*.pdf
+*.svg
+
+# Jupyter Notebooks
+*.ipynb
+.ipynb_checkpoints/
+
+# Python files to ignore
+gab.py
+
+# OS generated files
+.DS_Store
+
+# vscode
+.vscode/
