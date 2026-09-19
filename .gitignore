@@ -31,3 +31,6 @@ gab.py
 
 # vscode
 .vscode/
+
+#html
+*.html
