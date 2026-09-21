@@ -71,19 +71,18 @@ def determine_d_0(L_ref, C_ref, D_ref, distance_matrix):
 
 
 
-    for d_0 in range(0,61):
+    for d_0 in range(0,20):
 
         P_mat = P(D, d_0)
 
-        np.random.seed(10) 
+        #np.random.seed(10) 
         noise = np.random.normal(loc=0.1, scale=0.05, size=P_mat.shape)
         W = P_mat + noise    
 
         W = (W + W.T) / 2
         np.fill_diagonal(W, 0)
-        W = np.clip(W, 0, 1)
-
-        bct.binarize(W, copy = False)
+        threshold = np.percentile(W[W > 0], 60)  # keep top 20%
+        W = (W >= threshold).astype(int)
 
         distance_matrix = bct.distance_bin(W)
         L_indiv, _, _, _, _ = bct.charpath(distance_matrix)

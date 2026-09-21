@@ -14,15 +14,18 @@ from nilearn.plotting import (
     view_connectome,
 )
 
+def plot_connectome_matrix(connectome):
+    plot_matrix(
+        connectome, #np.array(connectomes[0], dtype=float),
+        labels= region_labels,
+        figure=(16, 9),
+        vmax=1,
+        vmin=0,
+        title="Connectomes Mat",
+        cmap= 'magma',
+        )
+    plt.savefig
+    return 
 
-mat_plot = plot_matrix(
-            connectome, #np.array(connectomes[0], dtype=float),
-            labels= region_labels,
-            figure=(16, 9),
-            vmax=1,
-            vmin=0,
-            title="Connectomes Mat",
-            cmap= 'magma',
-            )
-
+plot_connectome_matrix(connectome)
 plt.savefig('mat_plot')
