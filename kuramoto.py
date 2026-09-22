@@ -25,20 +25,19 @@ def phase_diff(phases):
 def generting_intrinstic_frequencies():
     """
     Guassian dist for assigning intrinsic frequesncies.
-    Uses average alpha frequency.
+    Uses average alpha frequency in rads per sec.
+    Returns 1xN mat.
     """
     intrinsic_freq = np.random.normal(loc = 65.97, scale= 5.24, size=size) # Narrow Guassian with mean alpha freq
     return intrinsic_freq
 
 
-def Kuramoto(phase, intrinsic_freq, phase_diff_mat):
+def Kuramoto(phase, intrinsic_freq, phase_diff_mat, W = connectome, K=1):
     """
     Runs one timestep on Kuromoto Model.
     Returns new phases (1xN) and the pairwise new phase difference matrix (NxN).
     """
-    phase_diff_mat_avg = phase_diff_mat / np.mean(phase_diff_mat)
-    K = 1
-    dtheta_dt = intrinsic_freq + K*np.sum(np.sin(phase_diff_mat_avg), axis = 1)
+    dtheta_dt = intrinsic_freq + K*np.sum(W * np.sin(phase_diff_mat), axis = 1)
     dt = 0.01
     next_phase = phase + dtheta_dt*dt
     phase_diff_next = phase_diff(next_phase)
@@ -56,7 +55,7 @@ def weight_update(W, phase_diff_t, phase_diff_next):
     return W + beta*np.sin(delta_phase)
 
 
-def run_kuramoto():
+def run_kuramoto(K):
     """
     Main loop.
     """
@@ -69,7 +68,7 @@ def run_kuramoto():
 
     for t in range(1000):
 
-        next_phase, phase_diff_next = Kuramoto(phase=phases, intrinsic_freq=intrinsic_freq, phase_diff_mat=phase_diff_mat)
+        next_phase, phase_diff_next = Kuramoto(phase=phases, intrinsic_freq=intrinsic_freq, phase_diff_mat=phase_diff_mat, W=connectome, K=K)
         W_new = weight_update(W, phase_diff_mat, phase_diff_next)
 
         if t % 100 == 0:
@@ -80,8 +79,9 @@ def run_kuramoto():
 
     return Weights_record
 
-Weights_record = run_kuramoto()
-np.save('pruned_weights.npy', np.array(Weights_record, dtype=object), allow_pickle=True)
+# Weights_record = run_kuramoto()
+#np.save('pruned_weights.npy', np.array(Weights_record, dtype=object), allow_pickle=True)
+# moving these lines to coupling_constant
 
 
 
