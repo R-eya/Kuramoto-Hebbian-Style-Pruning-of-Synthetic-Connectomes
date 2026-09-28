@@ -20,7 +20,7 @@ def running_kuromoto():
     Saves each of the final outcomes.
     """
     K_crit = K_c()
-    K_values = np.arange(0, 3 * K_crit, 0.5) # Set steps as 3 values for now
+    K_values = np.arange(0, 5 * K_crit, 1)
     # Also K_crit is not uppder limit bc its theoretical? so x3 
     Results = []
 

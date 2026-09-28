@@ -82,9 +82,3 @@ def run_kuramoto(K):
 # Weights_record = run_kuramoto()
 #np.save('pruned_weights.npy', np.array(Weights_record, dtype=object), allow_pickle=True)
 # moving these lines to coupling_constant
-
-
-
-
-
-    
