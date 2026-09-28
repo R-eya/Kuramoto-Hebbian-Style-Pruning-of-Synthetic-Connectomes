@@ -10,13 +10,17 @@ atlas, map_filepath, region_labels, roi_coordinates = initialising_atlas()
 
 Results = np.load('Results.npy', allow_pickle=True)
 origional_connectome = np.load('origional_connectome.npy')
+origional_connectome - np.asarray(origional_connectome, dtype=float)
 
 n_rows = len(K_values)
 i_iterates = range(n_rows)
 
-fig, axes = plt.subplots(nrows=n_rows, ncols=2, figsize= (16,6))
+fig, axes = plt.subplots(nrows=n_rows, ncols=2, figsize= (12, 4 * n_rows))
 
 def plot_connectome_matrix(K, result, i):
+    result = np.asarray(result , dtype=float)
+
+
     plot_matrix(
         result,
         labels= region_labels,
@@ -45,6 +49,7 @@ def plotting_loop():
 
         plot_connectome_matrix(K, result, i)
 
+    plt.tight_layout()
     plt.savefig('Comparison_Kvals')
 
 plotting_loop()
