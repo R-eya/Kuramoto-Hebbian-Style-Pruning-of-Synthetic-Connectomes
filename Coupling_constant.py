@@ -22,15 +22,27 @@ def running_kuromoto():
     K_crit = K_c()
     K_values = np.arange(0, 3 * K_crit, 0.5) # Set steps as 3 values for now
     # Also K_crit is not uppder limit bc its theoretical? so x3 
+    Results = []
 
     for K in K_values:
         Weights_record = run_kuramoto(K)
         #np.save('pruned_weights.npy', np.array(Weights_record, dtype=object), allow_pickle=True) 
         # Saving the whole thing for each might be too much???
         Final_outcome = Weights_record[-1]
-        np.save(f'{K}_final_pruned_weight.npy', Final_outcome) 
+        Results.append(Final_outcome)
+        #np.save(f'{K}_final_pruned_weight.npy', Final_outcome) 
+    return Results, K_values
 
-running_kuromoto()     
+def Coupling_constant():
+    """
+    Runs this file. Saves the final outcomes after pruning <br>
+    over range of K values. <br>
+    Returns the used coupling constant values (K).
+    """
+    Results, K_values = running_kuromoto()   
+    np.save('Results', np.array(Results, dtype=object), allow_pickle=True) 
+    return K_values
+
 # NOTES
 # Just see if it runs for a few steps in K 
 # Maybe plot the finals to see

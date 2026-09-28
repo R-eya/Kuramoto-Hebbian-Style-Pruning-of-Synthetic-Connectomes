@@ -18,6 +18,7 @@ mat_plot*
 *.png
 *.pdf
 *.svg
+*.html
 
 # Jupyter Notebooks
 *.ipynb
