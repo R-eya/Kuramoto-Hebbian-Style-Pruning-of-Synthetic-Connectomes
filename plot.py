@@ -10,7 +10,7 @@ atlas, map_filepath, region_labels, roi_coordinates = initialising_atlas()
 
 Results = np.load('Results.npy', allow_pickle=True)
 origional_connectome = np.load('origional_connectome.npy')
-origional_connectome - np.asarray(origional_connectome, dtype=float)
+origional_connectome = np.asarray(origional_connectome, dtype=float)
 
 n_rows = len(K_values)
 i_iterates = range(n_rows)
@@ -23,7 +23,7 @@ def plot_connectome_matrix(K, result, i):
 
     plot_matrix(
         result,
-        labels= region_labels,
+        labels= None,
         axes = axes[i, 1],
         vmax=1,
         vmin=0,

@@ -1,10 +1,8 @@
 import numpy as np 
-connectome = np.load('origional_connectome.npy') # Initial starting matrix - same for every run
-size = np.size(connectome, axis=0) # n.o. nodes
-np.random.seed(10)
 
 
-def weights_to_phase():
+
+def weights_to_phase(connectome):
     """
     Calculates the initial phases from the 
     weights by using the first node as stationary frame.
@@ -22,7 +20,7 @@ def phase_diff(phases):
     """
     return phases[:, None] - phases[None, :] # Nx1 minus 1xN (i.e. j flips ones of the and subtracts pairwise)
 
-def generting_intrinstic_frequencies():
+def generting_intrinstic_frequencies(size):
     """
     Guassian dist for assigning intrinsic frequesncies.
     Uses average alpha frequency in rads per sec.
@@ -32,7 +30,7 @@ def generting_intrinstic_frequencies():
     return intrinsic_freq
 
 
-def Kuramoto(phase, intrinsic_freq, phase_diff_mat, W = connectome, K=1):
+def Kuramoto(phase, intrinsic_freq, phase_diff_mat, W, K=1):
     """
     Runs one timestep on Kuromoto Model.
     Returns new phases (1xN) and the pairwise new phase difference matrix (NxN).
@@ -55,15 +53,20 @@ def weight_update(W, phase_diff_t, phase_diff_next):
     return W + beta*np.sin(delta_phase)
 
 
-def run_kuramoto(K):
+def run_kuramoto(K, connectome):
     """
     Main loop.
     """
-    Weights_record = [connectome] # Record of all the weight matrices
+    #connectome = np.load('origional_connectome.npy') # Initial starting matrix - same for every run
     W = connectome
+    size = np.size(W, axis=0) # n.o. nodes 
+    np.random.seed(10)
 
-    initial_phases, initial_phase_diff_mat = weights_to_phase()
-    intrinsic_freq = generting_intrinstic_frequencies()
+
+    Weights_record = [W] # Record of all the weight matrices
+
+    initial_phases, initial_phase_diff_mat = weights_to_phase(W)
+    intrinsic_freq = generting_intrinstic_frequencies(size)
     phases, phase_diff_mat = initial_phases, initial_phase_diff_mat
 
     for t in range(1000):

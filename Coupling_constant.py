@@ -9,8 +9,8 @@ def K_c():
     """
     Returns theoreical critical threshold value of K.
     """
-    intrinsic_frequencies = generting_intrinstic_frequencies()
-    K_crit = np.sqrt(2 / np.pi) * np.sqrt(5.24) # Looked up formula
+    intrinsic_frequencies = generting_intrinstic_frequencies(size) # I think i out this in bc was gonna use a diff formula
+    K_crit = np.sqrt(8 / np.pi) * np.sqrt(5.24) # Looked up formula
     return K_crit
 
 
@@ -20,12 +20,13 @@ def running_kuromoto():
     Saves each of the final outcomes.
     """
     K_crit = K_c()
-    K_values = np.arange(0, 5 * K_crit, 1)
+    print(K_crit)
+    K_values = np.arange(0, 2 * K_crit, 1)
     # Also K_crit is not uppder limit bc its theoretical? so x3 
     Results = []
 
     for K in K_values:
-        Weights_record = run_kuramoto(K)
+        Weights_record = run_kuramoto(K, connectome=connectome)
         #np.save('pruned_weights.npy', np.array(Weights_record, dtype=object), allow_pickle=True) 
         # Saving the whole thing for each might be too much???
         Final_outcome = Weights_record[-1]
