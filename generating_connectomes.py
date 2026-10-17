@@ -113,16 +113,14 @@ def getting_matrix(d_0_best, distance_matrix):
 
     return W
 
-
-
-
 def generating_connectomes():
+    """
+    Returns a synthetic 100-region Schaefer connectome based off exponential distance decay. <br>
+    The param of distance fall off, d_0 is found by comparing with 1 childs resting fmri connectome.
+    """
     L_ref, C_ref, D_ref, D = extract_reference_values()
     d_0_best = determine_d_0(L_ref=L_ref, C_ref=C_ref,D_ref=D_ref, distance_matrix= D)
     W =  getting_matrix(d_0_best=d_0_best, distance_matrix=D)
     np.save('origional_connectome.npy', W)
-    print(d_0_best)
-    #print(W)
+    return W
     
-
-generating_connectomes()

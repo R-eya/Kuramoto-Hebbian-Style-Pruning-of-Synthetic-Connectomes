@@ -1,18 +1,9 @@
 import numpy as np 
 
 
-
-def weights_to_phase(connectome):
-    """
-    Calculates the initial phases from the 
-    weights by using the first node as stationary frame.
-    """
-    W_i1 = connectome[0] # Takes first row as initial i.e. make the first node the stationary frame 
-    # so all phases are teken relative to that node
-    prop_const = 2 * np.pi / np.max(W_i1) # map so that it spans 0 to 2pi
-    initial_phases = prop_const * W_i1
-    initial_phase_diff_mat = phase_diff(initial_phases)
-    return initial_phases, initial_phase_diff_mat
+def generting_intrinstic_frequencies(size, rng=None):
+    rng = np.random.default_rng() if rng is None else rng
+    return rng.normal(loc=65.97, scale=5.24, size=size)
 
 def phase_diff(phases):
     """
@@ -20,58 +11,55 @@ def phase_diff(phases):
     """
     return phases[:, None] - phases[None, :] # Nx1 minus 1xN (i.e. j flips ones of the and subtracts pairwise)
 
-def generting_intrinstic_frequencies(size):
-    """
-    Guassian dist for assigning intrinsic frequesncies.
-    Uses average alpha frequency in rads per sec.
-    Returns 1xN mat.
-    """
-    intrinsic_freq = np.random.normal(loc = 65.97, scale= 5.24, size=size) # Narrow Guassian with mean alpha freq
-    return intrinsic_freq
-
-
 def Kuramoto(phase, intrinsic_freq, phase_diff_mat, W, K=1):
     """
     Runs one timestep on Kuromoto Model.
     Returns new phases (1xN) and the pairwise new phase difference matrix (NxN).
     """
-    dtheta_dt = intrinsic_freq + K*np.sum(W * np.sin(phase_diff_mat), axis = 1)
+    dtheta_dt = intrinsic_freq - K*np.sum(W * np.sin(phase_diff_mat), axis = 1)
     dt = 0.01
     next_phase = phase + dtheta_dt*dt
     phase_diff_next = phase_diff(next_phase)
     return next_phase, phase_diff_next
 
-def weight_update(W, phase_diff_t, phase_diff_next):
+def weight_update(W, phase_diff_t, phase_diff_next, eta=5e-4, w_min=0.05):
     """
-    Thresholds.
+    Hebbian thresholding.
     Uses the change is the phase difference between time steps to prune matrix.
     """
-    beta = np.zeros_like(W)
-    mask = W > 0.05 # thresholding
-    beta[mask] = (100 * W[mask])**-1 # Ensures big weights dont massivelt dominate at start
-    delta_phase = np.abs(phase_diff_t) - np.abs(phase_diff_next) # Are nodes getting more or less in sync?
-    return W + beta*np.sin(delta_phase)
+    sync = np.cos(phase_diff_next)    # >0 if the pair became more in phase
+    W_new = W.copy()
+    edges = W > 0
+    W_new[edges] += eta * sync[edges]
+    W_new = np.clip(W_new, 0, 1)
+    W_new[W_new < w_min] = 0                      # actual pruning; zeros never revive
+    return W_new
 
+def wrap(delta):
+    return np.angle(np.exp(1j * delta))
 
-def run_kuramoto(K, connectome):
+def run_kuramoto(K, connectome, seed = 10):
     """
-    Main loop.
+    Main Kuromoto loop.
     """
     #connectome = np.load('origional_connectome.npy') # Initial starting matrix - same for every run
     W = connectome
     size = np.size(W, axis=0) # n.o. nodes 
-    np.random.seed(10)
+    
 
 
     Weights_record = [W] # Record of all the weight matrices
 
-    initial_phases, initial_phase_diff_mat = weights_to_phase(W)
-    intrinsic_freq = generting_intrinstic_frequencies(size)
-    phases, phase_diff_mat = initial_phases, initial_phase_diff_mat
+    rng = np.random.default_rng(seed)
+
+    phases = rng.uniform(0, 2 * np.pi, size)          # random start
+    intrinsic_freqs = generting_intrinstic_frequencies(size, rng)
+    intrinsic_freqs = intrinsic_freqs - intrinsic_freqs.mean()
+    phase_diff_mat = phase_diff(phases)
 
     for t in range(1000):
 
-        next_phase, phase_diff_next = Kuramoto(phase=phases, intrinsic_freq=intrinsic_freq, phase_diff_mat=phase_diff_mat, W=connectome, K=K)
+        next_phase, phase_diff_next = Kuramoto(phase=phases, intrinsic_freq=intrinsic_freqs, phase_diff_mat=phase_diff_mat, W=W, K=K)
         W_new = weight_update(W, phase_diff_mat, phase_diff_next)
 
         if t % 100 == 0:
@@ -79,9 +67,20 @@ def run_kuramoto(K, connectome):
         W = W_new
         phases = next_phase
         phase_diff_mat = phase_diff_next
-
+    Weights_record.append(W_new)
     return Weights_record
 
-# Weights_record = run_kuramoto()
-#np.save('pruned_weights.npy', np.array(Weights_record, dtype=object), allow_pickle=True)
-# moving these lines to coupling_constant
+def Kuromoto_K_Sweep(W, K_values_list):
+    """
+    Sweeps over ranger of K values and runs kuromoto.
+    Saves each of the final outcomes.
+    """
+
+    Results = []
+
+    for K in K_values_list:
+        Weights_record = run_kuramoto(K, connectome=W)
+        Final_outcome = Weights_record[-1]
+        Results.append(Final_outcome)
+    return Results
+
