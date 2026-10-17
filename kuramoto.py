@@ -38,7 +38,7 @@ def weight_update(W, phase_diff_t, phase_diff_next, eta=5e-4, w_min=0.05):
 def wrap(delta):
     return np.angle(np.exp(1j * delta))
 
-def run_kuramoto(K, connectome, seed = 10):
+def run_kuramoto(K, connectome, seed = 10, time_steps=1000):
     """
     Main Kuromoto loop.
     """
@@ -57,7 +57,7 @@ def run_kuramoto(K, connectome, seed = 10):
     intrinsic_freqs = intrinsic_freqs - intrinsic_freqs.mean()
     phase_diff_mat = phase_diff(phases)
 
-    for t in range(1000):
+    for t in range(time_steps):
 
         next_phase, phase_diff_next = Kuramoto(phase=phases, intrinsic_freq=intrinsic_freqs, phase_diff_mat=phase_diff_mat, W=W, K=K)
         W_new = weight_update(W, phase_diff_mat, phase_diff_next)
@@ -70,7 +70,7 @@ def run_kuramoto(K, connectome, seed = 10):
     Weights_record.append(W_new)
     return Weights_record
 
-def Kuromoto_K_Sweep(W, K_values_list):
+def Kuromoto_K_Sweep(W, K_values_list, time_steps):
     """
     Sweeps over ranger of K values and runs kuromoto.
     Saves each of the final outcomes.
@@ -79,7 +79,7 @@ def Kuromoto_K_Sweep(W, K_values_list):
     Results = []
 
     for K in K_values_list:
-        Weights_record = run_kuramoto(K, connectome=W)
+        Weights_record = run_kuramoto(K, connectome=W, time_steps=time_steps)
         Final_outcome = Weights_record[-1]
         Results.append(Final_outcome)
     return Results
