@@ -2,125 +2,112 @@ import numpy as np
 from nilearn import datasets, plotting
 from scipy.spatial.distance import cdist
 import bct
+import os
 from nilearn.maskers import NiftiLabelsMasker
 from nilearn.connectome import ConnectivityMeasure
+from config import Config
 
 
-def euclidean_dist(coords):
-    D = cdist(coords, coords, metric='euclidean')
-    return D
+class Connectome_Generator:
+    def __init__(self, cfg: Config = Config()):
+        self.cgf = cfg
+        self.data_dir = os.path.expanduser(cfg.data_dir)
+        self.atlas = None
+        self.map_filepath = None
+        self.region_labels = None
+        self.roi_coordinates = None
+        self.distance_matrix = None
+        self.L_ref = self.C_ref = self.D_ref = None
+        self.d0_best = None
+        self.W = None
 
-def P(D, d_0):
-    if d_0 <= 0:
-        return np.zeros_like(D)
-    scaling_factor = 10
-    return scaling_factor * np.exp(- D / d_0)
+    def load_atlas(self):
+            self.atlas = datasets.fetch_atlas_schaefer_2018(n_rois = self.cgf.n_rois, data_dir=self.data_dir)
+            self.map_filepath = self.atlas.maps
+            self.region_labels = self.atlas.labels
+            self.roi_coordinates= plotting.find_parcellation_cut_coords(self.map_filepath)
+            self.region_labels = self.region_labels[1::]
 
-def initialising_atlas():
-    atlas = datasets.fetch_atlas_schaefer_2018(n_rois = 100, data_dir='/home/jane/nilearn_data')
-    map_filepath = atlas.maps
-    region_labels = atlas.labels
-    roi_coordinates= plotting.find_parcellation_cut_coords(map_filepath)
-    region_labels = region_labels[1::]
-    return atlas, map_filepath, region_labels, roi_coordinates
+    def euclidean_dist(self):
+        self.distance_matrix = cdist(self.roi_coordinates, self.roi_coordinates, metric='euclidean')      
 
+    # Below Means you can call this function without creating an instance of the class
+    # so like turns it into a normal fn
+    @staticmethod
+    def graph_metrics(bin_matrix):
+        path_dist = bct.distance_bin(binary_W)
+        L, _, _, _, _ = bct.charpath(path_dist)
+        C = np.mean(bct.clustering_coef_bu(binary_W))
+        D = np.mean(bin_matrix > 0)
+        return L, C, D
 
-def extract_reference_values():
-    atlas, map_filepath, region_labels, roi_coordinates = initialising_atlas()
-    region_labels = region_labels[1::]
+    def connection_probability(self, d_0):
+        if d_0 <= 0:
+            return np.zeros_like(self.distance_matrix)
+  
+        return self.cgf.scaling_factor * np.exp(- self.distance_matrix / d_0)
 
-    dataset = datasets.fetch_development_fmri(n_subjects = 1, age_group = 'child', data_dir='/home/jane/nilearn_data')
-    masker = NiftiLabelsMasker(labels_img=map_filepath, 
-                           standardize='zscore_sample', 
-                           memory='nilearn_cache')
-
-
-    cluster_all = []
-    path_length_all = []
-    density_all = []
-
-    for i in range(1):
-        fmri_file = dataset.func[i]
-        confounds_file = dataset.confounds[i]
-
-        time_series = masker.fit_transform(fmri_file, confounds= confounds_file)
-        correlation_measure = ConnectivityMeasure(kind = 'correlation')  
-        matrix = correlation_measure.fit_transform([time_series])[0]
-        np.fill_diagonal(matrix, 0)
-        matrix[matrix < 0] = 0 
-        bct.binarize(matrix, copy = False)
-
-        distance_matrix = bct.distance_bin(matrix)
-        L_indiv, _, _, _, _ = bct.charpath(distance_matrix)
-        C_indiv = np.mean(bct.clustering_coef_bu(matrix))
-
-        path_length_all.append(L_indiv)
-        cluster_all.append(C_indiv)
-        density_all.append(np.mean(matrix > 0))
-
-    L_ref = np.mean(path_length_all)
-    C_ref = np.mean(cluster_all)
-    D_ref = np.mean(density_all)
-
-    return L_ref, C_ref, D_ref, euclidean_dist(roi_coordinates)
-
-def determine_d_0(L_ref, C_ref, D_ref, distance_matrix):
-    RMSD = np.inf
-    d_0_best = 0
-    D = distance_matrix
-
-
-
-    for d_0 in range(0,20):
-
-        P_mat = P(D, d_0)
-
-        #np.random.seed(10) 
-        noise = np.random.normal(loc=0.1, scale=0.05, size=P_mat.shape)
-        W = P_mat + noise    
-
-        W = (W + W.T) / 2
+    def noise_symmetric(self, d_0, rng):
+        
+        P_mat = self.connection_probability(d_0)  
+        noise = np.random.normal(loc= self.cgf.noise_loc, scale=self.cgf.noise_scale, size=P_mat.shape) 
+        W = (P_mat + noise + (P_mat + noise).T) / 2
         np.fill_diagonal(W, 0)
-        threshold = np.percentile(W[W > 0], 60)  # keep top 20%
-        W = (W >= threshold).astype(int)
+        return W
 
-        distance_matrix = bct.distance_bin(W)
-        L_indiv, _, _, _, _ = bct.charpath(distance_matrix)
-        C_indiv = np.mean(bct.clustering_coef_bu(W))
-        D_indiv = np.mean(W > 0)
+    def reference_metreics(self):
+        dataset = datasets.fetch_development_fmri(n_subjects = 1, age_group = 'child', data_dir=self.data_dir)
+        masker = NiftiLabelsMasker(labels_img=self.map_filepath, 
+                       standardize='zscore_sample', 
+                       memory='nilearn_cache')
+        cluster_all, path_length_all, density_all = [], [], []
+        for fmri_file, confounds_file in zip(dataset.func, dataset.confounds):
+            time_series = masker.fit_transform(fmri_file, confounds= confounds_file)
+            correlation_measure = ConnectivityMeasure(kind = 'correlation')  
+            matrix = correlation_measure.fit_transform([time_series])[0]
+            np.fill_diagonal(matrix, 0)
+            matrix[matrix < 0] = 0 
+            bct.binarize(matrix, copy = False)
+            L, C, D = self.graph_metrics(matrix)
+            path_length_all.append(L)
+            cluster_all.append(C)
+            density_all.append(D)
+        self.L_ref = np.mean(path_length_all)
+        self. C_ref = np.mean(cluster_all)
+        self.D_ref = np.mean(density_all)
 
-        RMSD_now = np.sqrt((C_indiv - C_ref)**2 + (L_indiv - L_ref)**2 + (D_indiv - D_ref)**2)
 
-        if RMSD_now < RMSD:
-            RMSD = RMSD_now
-            d_0_best = d_0
+    def d_0_Sweep(self):
+        rng = np.random.RandomState(self.cgf.seed)
 
-    return d_0_best
+        RMSD = np.inf
+        d_0_best = 0
+
+        for d_0 in self.cgf.d0_range:
+
+            W = self.noise_symmetric(d_0, rng)
+            threshold = np.percentile(W[W > 0], self.cgf.threshold_percent) 
+            W_bin = (W >= threshold).astype(int)
+
+            L, C, D = self._graph_metrics(W_bin)
+
+            RMSD_now = np.sqrt((C - self.C_ref)**2 + (L - self.L_ref)**2 + (D - self.D_ref)**2)
+
+            if RMSD_now < RMSD:
+                RMSD = RMSD_now
+                d_0_best = d_0
+
+        self.d0_best - d_0_best
 
 
-def getting_matrix(d_0_best, distance_matrix):
-    np.random.seed(10)
+    def create_matrix(self):
+        rng = np.random.RandomState(self.cgf.seed)
+        W = self.noise_symmetric(self.d0_best, rng)
+        return np.clip(W, 0, 1)
 
-    d_0 = d_0_best
-    D = distance_matrix
-
-    P_mat = P(D, d_0)  
-    noise = np.random.normal(loc=0.1, scale=0.05, size=P_mat.shape)  # Is it bc noice can be negative and is too big??? - can be fixed move loc to like 0.5
-    W = P_mat + noise
-    W = (W + W.T) / 2
-    np.fill_diagonal(W, 0)
-    W = np.clip(W, 0, 1)
-
-    return W
-
-def generating_connectomes():
-    """
-    Returns a synthetic 100-region Schaefer connectome based off exponential distance decay. <br>
-    The param of distance fall off, d_0 is found by comparing with 1 childs resting fmri connectome.
-    """
-    L_ref, C_ref, D_ref, D = extract_reference_values()
-    d_0_best = determine_d_0(L_ref=L_ref, C_ref=C_ref,D_ref=D_ref, distance_matrix= D)
-    W =  getting_matrix(d_0_best=d_0_best, distance_matrix=D)
-    np.save('origional_connectome.npy', W)
-    return W
-    
+    def generate_connectome(self):
+        self.load_atlas()
+        self.reference_metreics()
+        self.d_0_Sweep()
+        self.W = self.create_matrix()
+        return self.W

@@ -1,9 +1,21 @@
 import numpy as np 
 
 
-def generting_intrinstic_frequencies(size, rng=None):
-    rng = np.random.default_rng() if rng is None else rng
-    return rng.normal(loc=65.97, scale=5.24, size=size)
+### Maybe make a kuromoto class? Yes do this
+
+
+
+def generting_intrinstic_frequencies(W):
+    """
+    Returns intrinstic angular frequencies.
+    By scaling the node strength to the alpha frequency scale (8-12Hz)
+    """
+    node_strengths = np.sum(W, axis = 1)
+    alpha_max, alpha_min = 12, 8
+    alpha_range = alpha_max - alpha_min
+
+    omegas = alpha_min + alpha_range*(node_strengths -  node_strengths.min()) / (node_strengths.max() - node_strengths.min())
+    return omegas
 
 def phase_diff(phases):
     """
@@ -11,12 +23,13 @@ def phase_diff(phases):
     """
     return phases[:, None] - phases[None, :] # Nx1 minus 1xN (i.e. j flips ones of the and subtracts pairwise)
 
-def Kuramoto(phase, intrinsic_freq, phase_diff_mat, W, K=1):
+def Kuramoto(phase, intrinsic_freq, phase_diff_mat, W, size, Binary_mat, K=1):
     """
     Runs one timestep on Kuromoto Model.
     Returns new phases (1xN) and the pairwise new phase difference matrix (NxN).
     """
-    dtheta_dt = intrinsic_freq - K*np.sum(W * np.sin(phase_diff_mat), axis = 1)
+    N = size
+    dtheta_dt = intrinsic_freq - (K/N)*np.sum(Binary_mat * W * np.sin(phase_diff_mat), axis = 1)
     dt = 0.01
     next_phase = phase + dtheta_dt*dt
     phase_diff_next = phase_diff(next_phase)
@@ -52,14 +65,15 @@ def run_kuramoto(K, connectome, seed = 10, time_steps=1000):
 
     rng = np.random.default_rng(seed)
 
-    phases = rng.uniform(0, 2 * np.pi, size)          # random start
-    intrinsic_freqs = generting_intrinstic_frequencies(size, rng)
+    phases = rng.uniform(-np.pi, np.pi, size)          # random start
+    intrinsic_freqs = generting_intrinstic_frequencies(W=W)
     intrinsic_freqs = intrinsic_freqs - intrinsic_freqs.mean()
     phase_diff_mat = phase_diff(phases)
 
     for t in range(time_steps):
+        Binary_mat = np.where(W > 0, 1, 0)
 
-        next_phase, phase_diff_next = Kuramoto(phase=phases, intrinsic_freq=intrinsic_freqs, phase_diff_mat=phase_diff_mat, W=W, K=K)
+        next_phase, phase_diff_next = Kuramoto(phase=phases, intrinsic_freq=intrinsic_freqs, phase_diff_mat=phase_diff_mat, W=W, Binary_mat=Binary_mat, size=size, K=K)
         W_new = weight_update(W, phase_diff_mat, phase_diff_next)
 
         if t % 100 == 0:
