@@ -19,7 +19,7 @@
  | Parameter | Value | Justification |
  | :--- | :--- | :--- |
  |scaling_factor| 10.0 | blank |      
- |threshold_percent | blank|
+ |threshold_percent | 60 | blank|
 
   ### Kuramoto 
    | Parameter | Value | Justification |
@@ -27,13 +27,13 @@
     |dt | 0.01 | |
     |eta| 5e-4 | |
     |time_steps| 1000 | 1000 time-steps is approx 1 year between ages 1-2years|
-    |w_min| 0.1|
+    |w_min| 0.1| |
     |record_each| 100 | for storage - to be used to show the dynamic pruning|
     |sync_reward| 0.5 | phase synchronisation is rewarded half as much as desynchronisation is    penalised to mitigate random hubs forming due to noise|
     |desync_penalty| 1| |
 
   ### Intrinsic Frequency Proportions 
-     | Parameter | Value | Justification |
+   | Parameter | Value | Justification |
    | :--- | :--- | :--- |
    |alpha_max| 12.0| |
    |alpha_min| 8.0 | ref:https://www.sciencedirect.com/topics/medicine-and-dentistry/alpha-wave |
