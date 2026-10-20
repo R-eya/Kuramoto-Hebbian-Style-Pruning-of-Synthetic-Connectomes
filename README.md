@@ -29,10 +29,12 @@
     desync_penalty: float = 1
 
   ### Intrinsic Frequency Proportions 
+    alpha_max: float = 12.0
+    alpha_min: float = 8.0 | ref:https://www.sciencedirect.com/topics/medicine-and-dentistry/alpha-wave
     node_strength_proportion: float = 0.5 | The amount that the node strengths affect the intrinsic frequencies of each region i.e. hubs will have higher node strengths and therfore a stronger "pull" (intrinsic frequency).
     physical_distance_proportion: float = 1 - node_strength_proportion | The rest of the intrinsic frequency is determined by physical distance between regions
 
   ### Coupling Constant Sweep
-    sigma: float = 5.24 | to put onto alpha freq scale
+    sigma: float = (alpha_max - alpha_min)*2*np.pi / np.sqrt(alpha_max) | std for alpha frequency range
     k_max_factor: float = 10.0
     number_of_k_values: int = 25
