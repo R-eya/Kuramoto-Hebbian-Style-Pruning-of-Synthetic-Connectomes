@@ -1,20 +1,25 @@
-import numpy as np
-from generating_connectomes import generating_connectomes
+from config import Config
+from generating_connectomes import Connectome_Generator
 from Coupling_constant import K_values
-from kuramoto import Kuromoto_K_Sweep
-from plot import plotting_loop
+from kuramoto import K_Sweep
+from plot import ConnectomePlotter
+
+def main(cfg :Config = Config()):
+    generator = Connectome_Generator(cfg)
+    W_0 = generator.generate_connectome()
+
+    K_vals, K_c = K_values(W_0, cfg)
+
+    results = K_Sweep(W_0, K_values=K_vals, cfg=cfg)
+
+    plotter = ConnectomePlotter()
+    plotter. plot_sweep(W0=W_0, Results=results, K_values=K_vals, save_path="Comparison_Kvals.png",row_indices=None)
+
+    return W_0, K_vals, K_c, results
 
 
-
-def main():
-    time_steps = 400 
-    synthetic_origional = generating_connectomes()
-    K_values_list, K_crit = K_values(W=synthetic_origional)
-    Results = Kuromoto_K_Sweep(W=synthetic_origional, K_values_list=K_values_list, time_steps=time_steps)
-    plotting_loop(Results=Results, synthetic_origional=synthetic_origional, K_values_list=K_values_list)
-
-main()
-
+if __name__ == "__main__":
+    main()
 
 #### Figure out what timeframe to use and calc timesteps accordingly -- a lot of papers take 1000 weight updates as 1 year
 # Look into that cuz the network changes a lot for just 500

@@ -35,9 +35,9 @@ class Connectome_Generator:
     # so like turns it into a normal fn
     @staticmethod
     def graph_metrics(bin_matrix):
-        path_dist = bct.distance_bin(binary_W)
+        path_dist = bct.distance_bin(bin_matrix)
         L, _, _, _, _ = bct.charpath(path_dist)
-        C = np.mean(bct.clustering_coef_bu(binary_W))
+        C = np.mean(bct.clustering_coef_bu(bin_matrix))
         D = np.mean(bin_matrix > 0)
         return L, C, D
 
@@ -47,11 +47,11 @@ class Connectome_Generator:
   
         return self.cgf.scaling_factor * np.exp(- self.distance_matrix / d_0)
 
-    def noise_symmetric(self, d_0, rng):
-        
+    def noise_symmetric(self, d_0, rng): 
         P_mat = self.connection_probability(d_0)  
-        noise = np.random.normal(loc= self.cgf.noise_loc, scale=self.cgf.noise_scale, size=P_mat.shape) 
-        W = (P_mat + noise + (P_mat + noise).T) / 2
+        noise = rng.normal(loc= self.cgf.noise_loc, scale=self.cgf.noise_scale, size=P_mat.shape) 
+        noisey_P = P_mat + noise
+        W = (noisey_P + noisey_P.T) / 2
         np.fill_diagonal(W, 0)
         return W
 
@@ -89,7 +89,7 @@ class Connectome_Generator:
             threshold = np.percentile(W[W > 0], self.cgf.threshold_percent) 
             W_bin = (W >= threshold).astype(int)
 
-            L, C, D = self._graph_metrics(W_bin)
+            L, C, D = self.graph_metrics(W_bin)
 
             RMSD_now = np.sqrt((C - self.C_ref)**2 + (L - self.L_ref)**2 + (D - self.D_ref)**2)
 
@@ -97,7 +97,7 @@ class Connectome_Generator:
                 RMSD = RMSD_now
                 d_0_best = d_0
 
-        self.d0_best - d_0_best
+        self.d0_best = d_0_best
 
 
     def create_matrix(self):
@@ -107,6 +107,7 @@ class Connectome_Generator:
 
     def generate_connectome(self):
         self.load_atlas()
+        self.euclidean_dist()
         self.reference_metreics()
         self.d_0_Sweep()
         self.W = self.create_matrix()

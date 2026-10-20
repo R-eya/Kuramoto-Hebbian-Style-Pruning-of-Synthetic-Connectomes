@@ -1,100 +1,87 @@
 import numpy as np 
-
+from config import Config
 
 ### Maybe make a kuromoto class? Yes do this
 
+class Kuramoto:
+    def __init__(self, W_0, K, cfg: Config = Config()):
+        self.cfg = cfg
+        self.K = K
+
+        self.W = np.asarray(W_0, dtype=float).copy()
+        self.bin = (self.W > 0).astype(int)
+        self.size = self.W.shape[0]
+
+        rng = np.random.default_rng(cfg.seed)
+        self.phases = rng.uniform(-np.pi, np.pi, self.size)   
+        omegas = self.intrinsic_frequencies(self.W)
+        self.omegas = omegas - omegas.mean()                
+        self.phase_diff_mat = self.phase_diff(self.phases)
+
+        self.record = [self.W.copy()]
+
+    @staticmethod
+    def intrinsic_frequencies(W):
+        """
+        Returns intrinstic angular frequencies.
+        By scaling the node strength to the alpha frequency scale (8-12Hz)
+        """
+        node_strengths = np.sum(W, axis = 1)
+        alpha_max, alpha_min = 12, 8
+        alpha_range = alpha_max - alpha_min
+
+        omegas = alpha_min + alpha_range*(node_strengths -  node_strengths.min()) / (node_strengths.max() - node_strengths.min())
+        return omegas
+
+    @staticmethod
+    def phase_diff(phases):
+        """
+        Returns a pairwise phase difference matrix between each pair of nodes.
+        """
+        return phases[:, None] - phases[None, :] # Nx1 minus 1xN (i.e. j flips ones of the and subtracts pairwise)
+
+    def Kuramoto_equation(self):
+        """
+        Runs one timestep on Kuromoto Model.
+        Returns new phases (1xN) and the pairwise new phase difference matrix (NxN).
+        """
+        dtheta_dt = self.omegas - (self.K/self.size)*np.sum(self.bin * self.W * np.sin(self.phase_diff_mat), axis = 1)
+        dt = 0.01
+        next_phase = self.phases + dtheta_dt * self.cfg.dt
+        return next_phase, self.phase_diff(next_phase)
+
+    def weight_update(self, phase_diff_next):
+        """
+        Hebbian thresholding.
+        Uses the change is the phase difference between time steps to prune matrix.
+        """
+        sync = np.cos(phase_diff_next)   
+        W_new = self.W.copy()
+        edges = self.W > 0
+        W_new[edges] += self.cfg.eta * sync[edges]
+        W_new = np.clip(W_new, 0, 1)
+        W_new[W_new < self.cfg.w_min] = 0                    
+        return W_new
+
+    def run(self):
+        for t  in range(self.cfg.time_steps):
+            next_phases, phase_diff_next = self.Kuramoto_equation()
+            W_new = self.weight_update(phase_diff_next)
+
+            if t % self.cfg.record_each == 0:
+                self.record.append(W_new)
+
+            self.W = W_new
+            self.phases =  next_phases
+            self.phase_diff_mat = phase_diff_next
+
+        self.record.append(self.W)
+        return self.record
+
+    @property
+    def final_weights(self):
+        return self.record[-1]
 
 
-def generting_intrinstic_frequencies(W):
-    """
-    Returns intrinstic angular frequencies.
-    By scaling the node strength to the alpha frequency scale (8-12Hz)
-    """
-    node_strengths = np.sum(W, axis = 1)
-    alpha_max, alpha_min = 12, 8
-    alpha_range = alpha_max - alpha_min
-
-    omegas = alpha_min + alpha_range*(node_strengths -  node_strengths.min()) / (node_strengths.max() - node_strengths.min())
-    return omegas
-
-def phase_diff(phases):
-    """
-    Returns a pairwise phase difference matrix between each pair of nodes.
-    """
-    return phases[:, None] - phases[None, :] # Nx1 minus 1xN (i.e. j flips ones of the and subtracts pairwise)
-
-def Kuramoto(phase, intrinsic_freq, phase_diff_mat, W, size, Binary_mat, K=1):
-    """
-    Runs one timestep on Kuromoto Model.
-    Returns new phases (1xN) and the pairwise new phase difference matrix (NxN).
-    """
-    N = size
-    dtheta_dt = intrinsic_freq - (K/N)*np.sum(Binary_mat * W * np.sin(phase_diff_mat), axis = 1)
-    dt = 0.01
-    next_phase = phase + dtheta_dt*dt
-    phase_diff_next = phase_diff(next_phase)
-    return next_phase, phase_diff_next
-
-def weight_update(W, phase_diff_t, phase_diff_next, eta=5e-4, w_min=0.05):
-    """
-    Hebbian thresholding.
-    Uses the change is the phase difference between time steps to prune matrix.
-    """
-    sync = np.cos(phase_diff_next)    # >0 if the pair became more in phase
-    W_new = W.copy()
-    edges = W > 0
-    W_new[edges] += eta * sync[edges]
-    W_new = np.clip(W_new, 0, 1)
-    W_new[W_new < w_min] = 0                      # actual pruning; zeros never revive
-    return W_new
-
-def wrap(delta):
-    return np.angle(np.exp(1j * delta))
-
-def run_kuramoto(K, connectome, seed = 10, time_steps=1000):
-    """
-    Main Kuromoto loop.
-    """
-    #connectome = np.load('origional_connectome.npy') # Initial starting matrix - same for every run
-    W = connectome
-    size = np.size(W, axis=0) # n.o. nodes 
-    
-
-
-    Weights_record = [W] # Record of all the weight matrices
-
-    rng = np.random.default_rng(seed)
-
-    phases = rng.uniform(-np.pi, np.pi, size)          # random start
-    intrinsic_freqs = generting_intrinstic_frequencies(W=W)
-    intrinsic_freqs = intrinsic_freqs - intrinsic_freqs.mean()
-    phase_diff_mat = phase_diff(phases)
-
-    for t in range(time_steps):
-        Binary_mat = np.where(W > 0, 1, 0)
-
-        next_phase, phase_diff_next = Kuramoto(phase=phases, intrinsic_freq=intrinsic_freqs, phase_diff_mat=phase_diff_mat, W=W, Binary_mat=Binary_mat, size=size, K=K)
-        W_new = weight_update(W, phase_diff_mat, phase_diff_next)
-
-        if t % 100 == 0:
-            Weights_record.append(W_new) # Only add every 100 timesteps to save mem
-        W = W_new
-        phases = next_phase
-        phase_diff_mat = phase_diff_next
-    Weights_record.append(W_new)
-    return Weights_record
-
-def Kuromoto_K_Sweep(W, K_values_list, time_steps):
-    """
-    Sweeps over ranger of K values and runs kuromoto.
-    Saves each of the final outcomes.
-    """
-
-    Results = []
-
-    for K in K_values_list:
-        Weights_record = run_kuramoto(K, connectome=W, time_steps=time_steps)
-        Final_outcome = Weights_record[-1]
-        Results.append(Final_outcome)
-    return Results
-
+def K_Sweep(W_0, K_values, cfg: Config = Config()):
+    return [Kuramoto(W_0=W_0, K=K, cfg=cfg).run()[-1] for K in K_values]

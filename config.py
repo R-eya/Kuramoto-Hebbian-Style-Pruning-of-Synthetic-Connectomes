@@ -16,10 +16,10 @@ class Config:
     dt: float = 0.01
     eta: float = 5e-4
     w_min: float = 0.05
-    time_steps: int = 1000
-    record_every: int = 100
+    time_steps: int = 5000
+    record_each: int = 100
 
     # Coupling Constant Sweep
     sigma: float = 5.24
     k_max_factor: float = 5.0
-    n_k: int = 25
+    number_of_k_values: int = 25
