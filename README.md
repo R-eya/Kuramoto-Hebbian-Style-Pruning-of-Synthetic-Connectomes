@@ -13,25 +13,31 @@
 
 
 
-## Config Decisions 
+## Configureation Decisions
  
  ### Connectome generation 
-    scaling_factor: float = 10.0        
-    threshold_percent: float = 60
+ | Parameter | Value | Justification |
+ | :--- | :--- | :--- |
+ |scaling_factor| 10.0 | blank |      
+ |threshold_percent | blank|
 
   ### Kuramoto 
-    dt: float = 0.01
-    eta: float = 5e-4
-    time_steps: int = 1000 | 1000 time-steps is approx 1 year between ages 1-2years
-    w_min: float = 0.1
-    record_each: int = 100 | for storage - to be used to show the dynamic pruning
-    sync_reward: float = 0.5 | phase synchronisation is rewarded half as much as desynchronisation is    penalised to mitigate random hubs forming due to noise
-    desync_penalty: float = 1
+   | Parameter | Value | Justification |
+   | :--- | :--- | :--- |
+    |dt | 0.01 | |
+    |eta| 5e-4 | |
+    |time_steps| 1000 | 1000 time-steps is approx 1 year between ages 1-2years|
+    |w_min| 0.1|
+    |record_each| 100 | for storage - to be used to show the dynamic pruning|
+    |sync_reward| 0.5 | phase synchronisation is rewarded half as much as desynchronisation is    penalised to mitigate random hubs forming due to noise|
+    |desync_penalty| 1| |
 
   ### Intrinsic Frequency Proportions 
-    alpha_max: float = 12.0
-    alpha_min: float = 8.0 | ref:https://www.sciencedirect.com/topics/medicine-and-dentistry/alpha-wave
-    node_strength_proportion: float = 0.5 | The amount that the node strengths affect the intrinsic frequencies of each region i.e. hubs will have higher node strengths and therfore a stronger "pull" (intrinsic frequency).
+     | Parameter | Value | Justification |
+   | :--- | :--- | :--- |
+   |alpha_max| 12.0| |
+   |alpha_min| 8.0 | ref:https://www.sciencedirect.com/topics/medicine-and-dentistry/alpha-wave |
+   |node_strength_proportion | 0.5 | The amount that the node strengths affect the intrinsic frequencies of each region i.e. hubs will have higher node strengths and therfore a stronger "pull" (intrinsic frequency) |
     physical_distance_proportion: float = 1 - node_strength_proportion | The rest of the intrinsic frequency is determined by physical distance between regions
 
   ### Coupling Constant Sweep
