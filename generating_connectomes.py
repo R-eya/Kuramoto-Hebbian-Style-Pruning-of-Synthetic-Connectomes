@@ -22,14 +22,15 @@ class Connectome_Generator:
         self.W = None
 
     def load_atlas(self):
-            self.atlas = datasets.fetch_atlas_schaefer_2018(n_rois = self.cgf.n_rois, data_dir=self.data_dir)
-            self.map_filepath = self.atlas.maps
-            self.region_labels = self.atlas.labels
-            self.roi_coordinates= plotting.find_parcellation_cut_coords(self.map_filepath)
-            self.region_labels = self.region_labels[1::]
+        self.atlas = datasets.fetch_atlas_schaefer_2018(n_rois = self.cgf.n_rois, data_dir=self.data_dir)
+        self.map_filepath = self.atlas.maps
+        self.region_labels = self.atlas.labels
+        self.roi_coordinates= plotting.find_parcellation_cut_coords(self.map_filepath)
+        self.region_labels = self.region_labels[1::]
 
     def euclidean_dist(self):
-        self.distance_matrix = cdist(self.roi_coordinates, self.roi_coordinates, metric='euclidean')      
+        self.distance_matrix = cdist(self.roi_coordinates, self.roi_coordinates, metric='euclidean')
+        return self.distance_matrix    
 
     # Below Means you can call this function without creating an instance of the class
     # so like turns it into a normal fn

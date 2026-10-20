@@ -10,7 +10,7 @@ def main(cfg :Config = Config()):
 
     K_vals, K_c = K_values(W_0, cfg)
 
-    results = K_Sweep(W_0, K_values=K_vals, cfg=cfg)
+    results = K_Sweep(W_0, K_values=K_vals, generator = generator, cfg=cfg)
 
     plotter = ConnectomePlotter()
     plotter. plot_sweep(W0=W_0, Results=results, K_values=K_vals, save_path="Comparison_Kvals.png",row_indices=None)
