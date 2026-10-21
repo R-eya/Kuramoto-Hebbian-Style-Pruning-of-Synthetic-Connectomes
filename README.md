@@ -12,6 +12,7 @@ flowchart LR
         Q[("Schaefer 2018 atlas<br/>(100 ROIs)")]
         A[("Nilearn developmental fMRI")]
     end
+    style Inputs fill:#e8f4fd,stroke:#2b6cb0,stroke-width:2px
 
     Q[("Schaefer 2018 Atlas <br> (100 ROIs)")] -->|Extract Euclidian Distances| W[Connection Probability Model] -->C
 
