@@ -6,15 +6,18 @@ Description
 
 ```mermaid
 flowchart TD
-    Q[(Schaefer 2018 Atlas 100 ROIs)] -->|Extract Euclidian Distances| W[Connection Probability Model] -->C
+    Q[("Schaefer 2018 Atlas <br> (100 ROIs)")] -->|Extract Euclidian Distances| W[Connection Probability Model] -->C
 
-
-    A[(Nilearn Developmental fMRI)] -->B[Reference fMRI Metrics]--> C((Compare Graph Metrics <br> Minimise RMSD )) -->|Sweep over d_0 <br> Best fit of d_0| D[Create Calibrated Synthetic Connectome]
+    G([Calculate Inrinsic Frequencies for each node]) --> E[Kuramoto Dynamics]
+    A[(Nilearn Developmental fMRI)] -->B[Reference fMRI Metrics]--> C(("Compare Graph Metrics <br> (Minimise RMSD)" )) -->|Sweep over d_0 | D[Create Calibrated Synthetic Connectome]
     D --> E
 
-    F[Calculate Critical Coupling Constant and Range of Values to Sweep] --> E
+    F([Calculate Critical Coupling Constant and Range of Values to Sweep]) --> E
 
-    G[Calculate Inrinsic Frequencies for each node ] --> E
+   %% Grouping Kuramoto Dynamics and its internal subroutine
+    subgraph Kuramoto_Simulation ["Coupling Constant Sweep"]
+        E[Kuramoto Dynamics]
+    end
 ```
 
 ## Model Decisions
