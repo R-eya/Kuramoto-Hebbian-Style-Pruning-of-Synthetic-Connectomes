@@ -17,13 +17,13 @@ flowchart LR
     Q[("Schaefer 2018 Atlas <br> (100 ROIs)")] -->|Extract Euclidian Distances between ROIs| W[Connection Probability Model] -->C
 
     A[(Nilearn Developmental fMRI)] -->B[Reference fMRI Metrics]--> C(("Compare Graph Metrics <br> (Minimise RMSD)" )) -->|Sweep over d_0 | D[Create Calibrated Synthetic Connectome]
-    D --> E
+    D --> E[Kuramoto Dynamics]
     subgraph kurma params ["Kuramoto Parameters"]
         direction TB
         G([Calculate Intrinsic Frequencies for each node])
         F([Calculate Critical Coupling Constant])
     end
-    G--> E[Kuramoto Dynamics]
+    G--> E
     F --> E
 
     subgraph Sweep ["Coupling constant sweep"]
