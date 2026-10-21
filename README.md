@@ -18,10 +18,13 @@ C -->|Three| F[fa:fa-car Car]
 
 ## Model Decisions
 ### Connectome Generation
-$ P(C_{ij}) = Aexp(\frac{{-D_{ij}}}{d_0}) 
-D_{ij} - Euclidean distance between regions i and j 
-d_0 - Constant, scales the cost of physical distance  
-A - Normalisation constant $
+$$
+P_{ij} = A \exp\left(-\frac{D_{ij}}{d_0}\right)
+$$
+
+- $D_{ij}$: Euclidean distance between regions $i$ and $j$
+- $d_0$: spatial scale of the distance cost, fitted by sweeping over a range of values
+- $A$: fixed scaling factor (`scaling_factor = 10` in `config.py`)
 
 ### Kuramoto Equation
 # NOTE USE THE IPYNB TO ADD TO README ALSO LOOK THROUGH PAPER NOTEBOOK
