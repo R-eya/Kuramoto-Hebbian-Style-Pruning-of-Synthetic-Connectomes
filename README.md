@@ -48,7 +48,7 @@
    |alpha_max| 12.0| |
    |alpha_min| 8.0 | ref:https://www.sciencedirect.com/topics/medicine-and-dentistry/alpha-wave |
    |node_strength_proportion | 0.5 | The amount that the node strengths affect the intrinsic frequencies of each region i.e. hubs will have higher node strengths and therfore a stronger "pull" (intrinsic frequency) |
-    physical_distance_proportio| 1 - node_strength_proportion | The rest of the intrinsic frequency is determined by physical distance between regions|
+   |physical_distance_proportion | 1 - (node_strength_proportion) | The rest of the intrinsic frequency is determined by physical distance between regions|
 
     </details>
     
