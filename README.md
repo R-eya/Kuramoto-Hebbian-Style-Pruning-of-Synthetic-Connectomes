@@ -1,10 +1,15 @@
-# 🧠 CC Pruning 
+# 🧠 Kuramoto-Hebbian Style Pruning of Synthetic Connectomes
 
 ## 📝 Overview
-Questions: Can a simplified Kuramoto model, alongside Hebbian-like pruning, reproduce early biological neurodevelopment in a synthetically generated connectome? How does the Kuramoto Coupling Strength effect the graph metrics of the resulting connectomes? 
+Simulating early neurodevelopmental pruning with Kuramoto Oscillators and Hebbian Plasticity.
+**Motivation:** fMRI data for children in early developmental stages is limited. The first stage aims to calibrate a synthetic connectome, (using a probability of connection model that decays exponentially with distance between regions) and forces a fixed high density of the top 70% of connections to imitate highly dense infant connectomes.
+Followed by Kuramoto-Hebbian style pruning.
+**The Project Asks:**
+>Can a simplified Kuramoto model, alongside Hebbian-like pruning, reproduce early biological neurodevelopment in a synthetically generated connectome?
+>How does the Kuramoto Coupling Strength affect the graph metrics of the resulting connectomes?
+>Can the resulting connectomes be classified into Autistic (ASD), Neurotypical (NT) and Schizophrenic (SZ) characteristic connectomes.
 
-Motivation: To evaluate the effect of Coupling Strengths on leading to different brain states (e.g. Autsim, ADHD, Schizophrenia)
-
+It is intended to explore how a single control parameter (coupling strength K) changes network organisation, which may inform how future, more realistic models are designed.
 
 ## Flow Chart 
 
@@ -17,7 +22,7 @@ flowchart LR
         A[("Nilearn developmental fMRI")]
     end
 
-    Q[("Schaefer 2018 Atlas <br> (100 ROIs)")] -->|Extract Euclidian Distances between ROIs| W[Connection Probability Model] -->C
+    Q[("Schaefer 2018 Atlas <br> (100 ROIs)")] -->|Extract Euclidean Distances between ROIs| W[Connection Probability Model] -->C
 
     A[(Nilearn Developmental fMRI)] -->B[Reference fMRI Metrics]--> C(("Compare Graph Metrics <br> (Minimise RMSD)" )) -->|Sweep over d_0 | D[Create Calibrated Synthetic Connectome]
     
@@ -80,11 +85,11 @@ $$
  | Parameter | Value | Justification | Source |
  | :--- | :--- | :--- | :--- |
  | n_rois | 100 | Memory | Schaefer et al. 2018 |
- | seed | 10 | Repreoducability | none |
+ | seed | 10 | Reproducibility | none |
  |scaling_factor | 10.0 | Representative of many strong connections in the early connectome. |  |    
  |noise_loc, noise_scale | 0.05, 0.05 | Small noise to replicate biological noise |  |
  | d0_range | 0-19 | Typical Value is 5-15 |  |
- |threshold_percent | 30??? | NEED TO JUSTIFY| |
+ |threshold_percent | 30 | Keeps top 70% of edges, dense to represent unpruned network | |
 
  </details>
 
@@ -98,7 +103,8 @@ $$
   |time_steps| 2000 | Running for 2 years | 1000 time-steps is approx 1 year between ages 1-2years |
   |w_min| 0.1| Pruning threshold | |
   |record_each| 100 | Storage - to be used to show the dynamic pruning| |
-  |sync_reward, desync penalty| 0.5 | phase synchronisation is rewarded half as much as desynchronisation is    penalised to mitigate random hubs forming due to noise|
+  |sync_reward, desync penalty| 0.5 | phase synchronisation is rewarded half as much as desynchronisation is penalised to mitigate random hubs forming due to noise|
+  | intrinsic_frequency_effect | 5 | Modelling choice to promote hubs formings | |
 
   </details>
 
@@ -107,18 +113,18 @@ $$
   
    | Parameter | Value | Justification | Source |
    | :--- | :--- | :--- | :--- |
-   |alpha_max, alpha_min| 12.0, 8.0| Alpha ramge band|  ref:https://www.sciencedirect.com/topics/medicine-and-dentistry/alpha-wave |
+   |alpha_max, alpha_min| 12.0, 8.0| Alpha range band|  ref:https://www.sciencedirect.com/topics/medicine-and-dentistry/alpha-wave |
    |node_strength_proportion | 0.5 | The amount that the node strengths affect the intrinsic frequencies of each region i.e. hubs will have higher node strengths and therefore a stronger "pull" (intrinsic frequency) | Modelling choice|
 
    </details>
 
    <details>
-   <summary>Coupling Constant SweepCoupling Constant Sweep Parameters</summary>
+   <summary>Coupling Constant Parameters</summary>
     
    | Parameter | Value | Justification | Source |
    | :--- | :--- | :--- | :--- |
-   |sigma | (alpha_max - alpha_min)*2*np.pi / np.sqrt(alpha_max) | std for alpha frequency range| |
-   |k_max_factor | 10.0 | Sweep of k goes up to k_max_factor*K_c| |
+   |sigma | (alpha_max - alpha_min)*2*np.pi / np.sqrt(12) | std for alpha frequency range| |
+   |k_max_factor | 3.0 | Sweep of k goes up to k_max_factor*K_c| |
    |number_of_k_values | 25 | Resolution of K sweep| |
    
    </details>
