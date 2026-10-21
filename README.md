@@ -29,6 +29,7 @@ flowchart LR
         E <-->|"Update Weights"| H
     end
 style Inputs fill:#fde8ef,stroke:#fde8ef,stroke-width:2px
+style Sweep fill:#e6fffa,stroke:#e6fffa,stroke-width:2px
 ```
 
 ## Model Decisions
