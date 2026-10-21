@@ -1,14 +1,24 @@
-## Model Decisions
-
 # CC Pruning 
 Description
 
 
+## Flow Chart 
+```mermaid
+    Q[(Schafer 2018 Atlas 100 ROIs)] -->|Extract Euclidian Distances| W[Connection Probability Model]
+
+
+    A[(Nilearn Developmental fMRI)] -->|Get money| B(Go shopping)
+    B --> C{Let me think}
+    C -->|One| D[Laptop]
+    C -->|Two| E[iPhone]
+    C -->|Three| F[fa:fa-car Car]
+```mermaid
+## Model Decisions
 ### Connectome Generation
-$ P(C_{ij}) = Aexp(\frac{{-D_{ij}}}{d_0})
-$ D_{ij} $ - Euclidean distance between regions i and j  <br>
-$ d_0 $ - Constant, scales the cost of physical distance  <br>
-$ A $- Normalisation constant 
+$ P(C_{ij}) = Aexp(\frac{{-D_{ij}}}{d_0}) $
+$ D_{ij} $ - Euclidean distance between regions i and j $
+$ d_0 $ - Constant, scales the cost of physical distance  $ 
+$ A $- Normalisation constant $
 
 ### Kuramoto Equation
 # NOTE USE THE IPYNB TO ADD TO README ALSO LOOK THROUGH PAPER NOTEBOOK
