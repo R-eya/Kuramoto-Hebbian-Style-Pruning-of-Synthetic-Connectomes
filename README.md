@@ -3,8 +3,10 @@ Description
 
 
 ## Flow Chart 
+
 ```mermaid
-Q[(Schafer 2018 Atlas 100 ROIs)] -->|Extract Euclidian Distances| W[Connection Probability Model]
+flowchart TD
+Q[(Schaefer 2018 Atlas 100 ROIs)] -->|Extract Euclidian Distances| W[Connection Probability Model]
 
 
 A[(Nilearn Developmental fMRI)] -->|Get money| B(Go shopping)
