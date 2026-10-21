@@ -6,14 +6,15 @@ Description
 
 ```mermaid
 flowchart TD
-Q[(Schaefer 2018 Atlas 100 ROIs)] -->|Extract Euclidian Distances| W[Connection Probability Model]
+    Q[(Schaefer 2018 Atlas 100 ROIs)] -->|Extract Euclidian Distances| W[Connection Probability Model] -->C
 
 
-A[(Nilearn Developmental fMRI)] -->|Get money| B(Go shopping)
-B --> C{Let me think}
-C -->|One| D[Laptop]
-C -->|Two| E[iPhone]
-C -->|Three| F[fa:fa-car Car]
+    A[(Nilearn Developmental fMRI)] -->B[Reference fMRI Metrics]--> C((Compare Graph Metrics <br> Minimise RMSD )) -->|Sweep over d_0 <br> Best fit of d_0| D[Create Calibrated Synthetic Connectome]
+    D --> E
+
+    F[Calculate Critical Coupling Constant and Range of Values to Sweep] --> E
+
+    G[Calculate Inrinsic Frequencies for each node ] --> E
 ```
 
 ## Model Decisions
