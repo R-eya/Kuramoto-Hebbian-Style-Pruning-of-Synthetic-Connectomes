@@ -4,8 +4,8 @@
 ## 📝 Overview
 
 **Motivation:** <br>
-Early developmental stage fMRI data is limited. The first stage aims to calibrate a synthetic connectome, (using a probability of connection model that decays exponentially with distance between regions) and forces a fixed high density of the top 70% of connections to imitate highly dense infant connectomes. <br>
-Followed by Kuramoto-Hebbian style pruning. <br>
+Early developmental stage fMRI data is limited. The project aims to calibrate a synthetic connectome, (using a probability of connection model that decays exponentially with distance between regions) and forces a fixed high density of the top 70% of connections to imitate highly dense infant connectomes. <br>
+Followed by Kuramoto-Hebbian style pruning over a range of Kuramoto Coupling Strength values. <br>
 
 **The Project Asks:** <br>
 >❓Can a simplified Kuramoto model, alongside Hebbian-like pruning, reproduce early biological neurodevelopment in a synthetically generated connectome? <br>
