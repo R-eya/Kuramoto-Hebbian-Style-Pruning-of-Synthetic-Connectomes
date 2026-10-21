@@ -6,6 +6,7 @@ Simulating early neurodevelopmental pruning with Kuramoto Oscillators and Hebbia
 
 **Motivation:** fMRI data for children in early developmental stages is limited. The first stage aims to calibrate a synthetic connectome, (using a probability of connection model that decays exponentially with distance between regions) and forces a fixed high density of the top 70% of connections to imitate highly dense infant connectomes. <br>
 Followed by Kuramoto-Hebbian style pruning. <br>
+
 **The Project Asks:** <br>
 ❓Can a simplified Kuramoto model, alongside Hebbian-like pruning, reproduce early biological neurodevelopment in a synthetically generated connectome? <br>
 ❓How does the Kuramoto Coupling Strength affect the graph metrics of the resulting connectomes? <br>
