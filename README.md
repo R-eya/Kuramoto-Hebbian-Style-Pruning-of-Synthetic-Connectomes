@@ -28,7 +28,7 @@ flowchart LR
         H["Hebbian pruning"]
         E <-->|"Update Weights"| H
     end
-style Inputs fill:#fde8ef,stroke:#2b6cb0,stroke-width:2px
+style Inputs fill:#fde8ef,stroke:#fde8ef,stroke-width:2px
 ```
 
 ## Model Decisions
