@@ -5,10 +5,10 @@ Description
 ## Flow Chart 
 
 ```mermaid
-flowchart TD
+flowchart LR
     Q[("Schaefer 2018 Atlas <br> (100 ROIs)")] -->|Extract Euclidian Distances| W[Connection Probability Model] -->C
 
-    G([Calculate Inrinsic Frequencies for each node]) --> E[Kuramoto Dynamics]
+    G([Calculate Intrinsic Frequencies for each node]) --> E[Kuramoto Dynamics]
     A[(Nilearn Developmental fMRI)] -->B[Reference fMRI Metrics]--> C(("Compare Graph Metrics <br> (Minimise RMSD)" )) -->|Sweep over d_0 | D[Create Calibrated Synthetic Connectome]
     D --> E
 
@@ -16,7 +16,7 @@ flowchart TD
 
    %% Grouping Kuramoto Dynamics and its internal subroutine
     subgraph Kuramoto_Simulation ["Coupling Constant Sweep"]
-        E[Kuramoto Dynamics]
+        E[Kuramoto Dynamics] <--> I[Hebbian Pruning]
     end
 ```
 
