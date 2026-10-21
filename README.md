@@ -20,7 +20,7 @@ flowchart LR
     A[(Nilearn Developmental fMRI)] -->B[Reference fMRI Metrics]--> C(("Compare Graph Metrics <br> (Minimise RMSD)" )) -->|Sweep over d_0 | D[Create Calibrated Synthetic Connectome]
     D --> E
 
-    F([Calculate Critical Coupling Constant and Range of Values to Sweep]) --> E
+    F([Calculate Critical Coupling Constant]) --> E
 
     subgraph Sweep ["Coupling constant sweep"]
         direction TB
