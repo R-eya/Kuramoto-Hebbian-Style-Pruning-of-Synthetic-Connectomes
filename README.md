@@ -16,11 +16,12 @@
 ## Configureation Decisions
  
  ### Connectome generation 
+ <details><summary>View Full Configuration Parameters</summary>
  | Parameter | Value | Justification |
  | :--- | :--- | :--- |
  |scaling_factor| 10.0 | blank |      
  |threshold_percent | 60 | blank|
-
+ </details>
   ### Kuramoto 
    | Parameter | Value | Justification |
    | :--- | :--- | :--- |
