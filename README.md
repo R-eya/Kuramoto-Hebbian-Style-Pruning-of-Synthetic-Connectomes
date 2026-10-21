@@ -5,7 +5,7 @@ Description
 ## Flow Chart 
 
 ```mermaid
-flowchart TD
+flowchart LR
 
     subgraph Inputs ["Data sources"]
         direction TB
@@ -18,13 +18,13 @@ flowchart TD
 
     A[(Nilearn Developmental fMRI)] -->B[Reference fMRI Metrics]--> C(("Compare Graph Metrics <br> (Minimise RMSD)" )) -->|Sweep over d_0 | D[Create Calibrated Synthetic Connectome]
     D --> E[Kuramoto Dynamics]
+    G--> E
+    F --> E
     subgraph kurma params ["Kuramoto Parameters"]
         direction TB
         G([Calculate Intrinsic Frequencies for each node])
         F([Calculate Critical Coupling Constant])
     end
-    G--> E
-    F --> E
 
     subgraph Sweep ["Coupling constant sweep"]
         direction TB
