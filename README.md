@@ -1,13 +1,13 @@
 # 🧠 Kuramoto-Hebbian Style Pruning of Synthetic Connectomes
 
 ## 📝 Overview
-Simulating early neurodevelopmental pruning with Kuramoto Oscillators and Hebbian Plasticity.
-**Motivation:** fMRI data for children in early developmental stages is limited. The first stage aims to calibrate a synthetic connectome, (using a probability of connection model that decays exponentially with distance between regions) and forces a fixed high density of the top 70% of connections to imitate highly dense infant connectomes.
-Followed by Kuramoto-Hebbian style pruning.
-**The Project Asks:**
->Can a simplified Kuramoto model, alongside Hebbian-like pruning, reproduce early biological neurodevelopment in a synthetically generated connectome?
->How does the Kuramoto Coupling Strength affect the graph metrics of the resulting connectomes?
->Can the resulting connectomes be classified into Autistic (ASD), Neurotypical (NT) and Schizophrenic (SZ) characteristic connectomes.
+Simulating early neurodevelopmental pruning with Kuramoto Oscillators and Hebbian Plasticity. <br>
+**Motivation:** fMRI data for children in early developmental stages is limited. The first stage aims to calibrate a synthetic connectome, (using a probability of connection model that decays exponentially with distance between regions) and forces a fixed high density of the top 70% of connections to imitate highly dense infant connectomes. <br>
+Followed by Kuramoto-Hebbian style pruning. <br>
+**The Project Asks:** <br>
+❓Can a simplified Kuramoto model, alongside Hebbian-like pruning, reproduce early biological neurodevelopment in a synthetically generated connectome?
+❓How does the Kuramoto Coupling Strength affect the graph metrics of the resulting connectomes?
+❓Can the resulting connectomes be classified into Autistic (ASD), Neurotypical (NT) and Schizophrenic (SZ) characteristic connectomes.
 
 It is intended to explore how a single control parameter (coupling strength K) changes network organisation, which may inform how future, more realistic models are designed.
 
