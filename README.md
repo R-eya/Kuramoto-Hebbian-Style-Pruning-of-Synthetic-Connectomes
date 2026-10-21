@@ -54,6 +54,7 @@
     
    <details>
    <summary>Coupling Constant SweepCoupling Constant Sweep Parameters</summary>
+    
    | Parameter | Value | Justification |
    | :--- | :--- | :--- |
    |sigma | (alpha_max - alpha_min)*2*np.pi / np.sqrt(alpha_max) | std for alpha frequency range|
