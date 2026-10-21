@@ -4,7 +4,7 @@
 ## 📝 Overview
 
 **Motivation:** <br>
-fMRI data for children in early developmental stages is limited. The first stage aims to calibrate a synthetic connectome, (using a probability of connection model that decays exponentially with distance between regions) and forces a fixed high density of the top 70% of connections to imitate highly dense infant connectomes. <br>
+Early developmental stage fMRI data is limited. The first stage aims to calibrate a synthetic connectome, (using a probability of connection model that decays exponentially with distance between regions) and forces a fixed high density of the top 70% of connections to imitate highly dense infant connectomes. <br>
 Followed by Kuramoto-Hebbian style pruning. <br>
 
 **The Project Asks:** <br>
