@@ -21,6 +21,7 @@ class Config:
     record_each: int = 100
     sync_reward: float = 0.5
     desync_penalty: float = 1
+    intrinsic_frequency_effect: float = 5
 
     # Intrinsic Frequency 
     alpha_max: float = 12.0
@@ -29,6 +30,6 @@ class Config:
     physical_distance_proportion: float = 1 - node_strength_proportion
 
     # Coupling Constant Sweep
-    sigma: float = (alpha_max - alpha_min)*2*np.pi / np.sqrt(alpha_max)
-    k_max_factor: float = 15.0
+    sigma: float = (alpha_max - alpha_min)*2*np.pi / np.sqrt(12)
+    k_max_factor: float = 3.0
     number_of_k_values: int = 25

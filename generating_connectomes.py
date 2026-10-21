@@ -78,8 +78,7 @@ class Connectome_Generator:
         self.D_ref = np.mean(density_all)
 
 
-    def d_0_Sweep(self):
-        rng = np.random.RandomState(self.cgf.seed)
+    def d_0_Sweep(self, rng):
 
         RMSD = np.inf
         d_0_best = 0
@@ -101,15 +100,15 @@ class Connectome_Generator:
         self.d0_best = d_0_best
 
 
-    def create_matrix(self):
-        rng = np.random.RandomState(self.cgf.seed)
+    def create_matrix(self, rng):
         W = self.noise_symmetric(self.d0_best, rng)
         return np.clip(W, 0, 1)
 
     def generate_connectome(self):
+        rng = np.random.RandomState(self.cgf.seed)
         self.load_atlas()
         self.euclidean_dist()
         self.reference_metreics()
-        self.d_0_Sweep()
-        self.W = self.create_matrix()
+        self.d_0_Sweep(rng)
+        self.W = self.create_matrix(rng)
         return self.W

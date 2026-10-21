@@ -1,6 +1,16 @@
 ## Model Decisions
 
-### Kurmamoto Equation
+# CC Pruning 
+Description
+
+
+### Connectome Generation
+$ P(C_{ij}) = Aexp(\frac{{-D_{ij}}}{d_0})
+$ D_{ij} $ - Euclidean distance between regions i and j  <br>
+$ d_0 $ - Constant, scales the cost of physical distance  <br>
+$ A $- Normalisation constant 
+
+### Kuramoto Equation
 # NOTE USE THE IPYNB TO ADD TO README ALSO LOOK THROUGH PAPER NOTEBOOK
 
 
@@ -13,7 +23,7 @@
 
 
 
-## Configureation Decisions
+## Configuration Decisions
  
  <details>
  <summary>Connectome generation Parameters</summary>

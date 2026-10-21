@@ -31,7 +31,7 @@ class Kuramoto:
         By scaling the node strength and the physical distance to the alpha frequency scale (8-12Hz)
         """
         node_strengths = np.sum(W, axis = 1)
-        alpha_max, alpha_min = 12, 8
+        alpha_max, alpha_min = self.cfg.alpha_max , self.cfg.alpha_min
         alpha_range = alpha_max - alpha_min
 
         omegas_NS = alpha_min + alpha_range*(node_strengths -  node_strengths.min()) / (node_strengths.max() - node_strengths.min())
@@ -55,7 +55,7 @@ class Kuramoto:
         Runs one timestep on Kuromoto Model.
         Returns new phases (1xN) and the pairwise new phase difference matrix (NxN).
         """
-        dtheta_dt = (5)*self.omegas - self.K*np.sum(self.bin * self.W * np.sin(self.phase_diff_mat), axis = 1)
+        dtheta_dt = (self.cfg.intrinsic_frequency_effect)*self.omegas - self.K*np.sum(self.bin * self.W * np.sin(self.phase_diff_mat), axis = 1)
         next_phase = self.phases + dtheta_dt * self.cfg.dt
         return next_phase, self.phase_diff(next_phase)
 
