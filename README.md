@@ -61,4 +61,3 @@
    |k_max_factor | 10.0 | |
    |number_of_k_values | 25 | |
 
-   </details>
