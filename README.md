@@ -17,11 +17,13 @@ flowchart LR
     Q[("Schaefer 2018 Atlas <br> (100 ROIs)")] -->|Extract Euclidian Distances between ROIs| W[Connection Probability Model] -->C
 
     A[(Nilearn Developmental fMRI)] -->B[Reference fMRI Metrics]--> C(("Compare Graph Metrics <br> (Minimise RMSD)" )) -->|Sweep over d_0 | D[Create Calibrated Synthetic Connectome]
-    D --> E[Kuramoto Dynamics]
-    G--> E
-    F --> E
-    subgraph kurma params ["Kuramoto Parameters"]
+    
+    %% Route D to E through an invisible node inside the subgraph
+    D --> HiddenNode --> E[Kuramoto Dynamics]
+
+    subgraph kurma ["Kuramoto Parameters"]
         direction TB
+        HiddenNode[" "]:::hidden
         G([Calculate Intrinsic Frequencies for each node])
         F([Calculate Critical Coupling Constant])
     end
@@ -32,8 +34,16 @@ flowchart LR
         H["Hebbian pruning"]
         E <-->|"Update Weights"| H
     end
+        
+    G --> E
+    F --> E
+
 style Inputs fill:#fde8ef,stroke:#fde8ef,stroke-width:2px
 style Sweep fill:#e6fffa,stroke:#e6fffa,stroke-width:2px
+style kurma fill:#f0ebfa,stroke:#f0ebfa,stroke-width:2px
+
+%% Hide the passthrough node so the line looks continuous
+classDef hidden display:none;
 ```
 
 ## Model Decisions
