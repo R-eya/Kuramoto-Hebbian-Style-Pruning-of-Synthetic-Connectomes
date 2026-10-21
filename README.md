@@ -14,7 +14,8 @@ B --> C{Let me think}
 C -->|One| D[Laptop]
 C -->|Two| E[iPhone]
 C -->|Three| F[fa:fa-car Car]
-```mermaid
+```
+
 ## Model Decisions
 ### Connectome Generation
 $ P(C_{ij}) = Aexp(\frac{{-D_{ij}}}{d_0}) $
