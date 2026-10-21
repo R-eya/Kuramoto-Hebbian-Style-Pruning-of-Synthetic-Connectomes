@@ -18,9 +18,9 @@ C -->|Three| F[fa:fa-car Car]
 
 ## Model Decisions
 ### Connectome Generation
-$ P(C_{ij}) = Aexp(\frac{{-D_{ij}}}{d_0}) $
-$ D_{ij} - Euclidean distance between regions i and j $
-$ d_0 - Constant, scales the cost of physical distance  $
+$ P(C_{ij}) = Aexp(\frac{{-D_{ij}}}{d_0}) 
+ D_{ij} - Euclidean distance between regions i and j 
+ d_0 - Constant, scales the cost of physical distance  
 $ A - Normalisation constant $
 
 ### Kuramoto Equation
