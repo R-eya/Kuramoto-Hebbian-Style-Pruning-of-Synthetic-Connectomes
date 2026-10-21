@@ -22,7 +22,10 @@
  | :--- | :--- | :--- |
  |scaling_factor| 10.0 | blank |      
  |threshold_percent | 60 | blank|
-  
+
+ </details>
+
+  <details>
   <summary>Kuramoto Parameters</summary>
     
   | Parameter | Value | Justification |
@@ -35,6 +38,9 @@
   |sync_reward| 0.5 | phase synchronisation is rewarded half as much as desynchronisation is    penalised to mitigate random hubs forming due to noise|
   |desync_penalty| 1| |
 
+  </details>
+
+   <details>
    <summary>Intrinsic Frequency Parameters</summary>
   
    | Parameter | Value | Justification |
@@ -44,6 +50,9 @@
    |node_strength_proportion | 0.5 | The amount that the node strengths affect the intrinsic frequencies of each region i.e. hubs will have higher node strengths and therfore a stronger "pull" (intrinsic frequency) |
    |physical_distance_proportion | 1 - (node_strength_proportion) | The rest of the intrinsic frequency is determined by physical distance between regions|
 
+   </details>
+
+   <details>
    <summary>Coupling Constant SweepCoupling Constant Sweep Parameters</summary>
     
    | Parameter | Value | Justification |
