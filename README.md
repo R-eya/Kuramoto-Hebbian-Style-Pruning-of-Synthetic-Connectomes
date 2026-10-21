@@ -12,7 +12,6 @@ flowchart LR
         Q[("Schaefer 2018 atlas<br/>(100 ROIs)")]
         A[("Nilearn developmental fMRI")]
     end
-    style Inputs fill:#e8f4fd,stroke:#2b6cb0,stroke-width:2px
 
     Q[("Schaefer 2018 Atlas <br> (100 ROIs)")] -->|Extract Euclidian Distances between ROIs| W[Connection Probability Model] -->C
 
@@ -40,7 +39,7 @@ flowchart LR
 
 style Inputs fill:#fde8ef,stroke:#fde8ef,stroke-width:2px
 style Sweep fill:#e6fffa,stroke:#e6fffa,stroke-width:2px
-style kurma fill:#f0ebfa,stroke:#f0ebfa,stroke-width:2px
+style kurma fill:#fdf0e6,stroke:#fdf0e6,stroke-width:2px
 
 %% Hide the passthrough node so the line looks continuous
 classDef hidden display:none;
