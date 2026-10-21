@@ -17,7 +17,7 @@
  
  ### Connectome generation 
  <details>
-  <summary>View Full Configuration Parameters</summary>
+ <summary>Connectome generation  Parameters</summary>
  | Parameter | Value | Justification |
  | :--- | :--- | :--- |
  |scaling_factor| 10.0 | blank |      
