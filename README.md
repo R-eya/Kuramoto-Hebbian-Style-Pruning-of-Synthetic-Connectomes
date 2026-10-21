@@ -16,7 +16,8 @@
 ## Configureation Decisions
  
  ### Connectome generation 
- <details><summary>View Full Configuration Parameters</summary>
+ <details>
+  <summary>View Full Configuration Parameters</summary>
  | Parameter | Value | Justification |
  | :--- | :--- | :--- |
  |scaling_factor| 10.0 | blank |      
