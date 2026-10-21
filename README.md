@@ -12,7 +12,7 @@ Followed by Kuramoto-Hebbian style pruning over a range of Kuramoto Coupling Str
 >❓How does the Kuramoto Coupling Strength affect the graph metrics of the resulting connectomes? <br>
 >❓Can the resulting connectomes be classified into Autistic (ASD), Neurotypical (NT) and Schizophrenic (SZ) characteristic connectomes? <br>
 
->❗It is intended to explore how a single control parameter (coupling strength K) changes network organisation, which may inform how future, more realistic models are designed.
+❗It is intended to explore how a single control parameter (coupling strength K) changes network organisation, which may inform how future, more realistic models are designed.
 
 ## Flow Chart 
 
