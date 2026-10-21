@@ -1,7 +1,7 @@
 ## Model Decisions
 
 ### Kurmamoto Equation
-
+# NOTE USE THE IPYNB TO ADD TO README ALSO LOOK THROUGH PAPER NOTEBOOK
 
 
 ### Coupling Constant

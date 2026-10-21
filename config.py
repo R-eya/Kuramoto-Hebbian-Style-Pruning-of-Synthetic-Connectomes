@@ -30,5 +30,5 @@ class Config:
 
     # Coupling Constant Sweep
     sigma: float = (alpha_max - alpha_min)*2*np.pi / np.sqrt(alpha_max)
-    k_max_factor: float = 10.0
+    k_max_factor: float = 15.0
     number_of_k_values: int = 25
