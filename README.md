@@ -1,5 +1,9 @@
-# CC Pruning 
-Description
+# 🧠 CC Pruning 
+
+## 📝 Overview
+Questions: Can a simplified Kuramoto model, alongside Hebbian-like pruning, reproduce early biological neurodevelopment in a synthetically generated connectome? How does the Kuramoto Coupling Strength effect the graph metrics of the resulting connectomes? 
+
+Motivation: To evaluate the effect of Coupling Strengths on leading to different brain states (e.g. Autsim, ADHD, Schizophrenia)
 
 
 ## Flow Chart 
@@ -77,7 +81,7 @@ $$
  | :--- | :--- | :--- | :--- |
  | n_rois | 100 | Memory | Schaefer et al. 2018 |
  | seed | 10 | Repreoducability | none |
- |scaling_factor | 10.0 | Normalisation of Connection Probability |  |    
+ |scaling_factor | 10.0 | Representative of many strong connections in the early connectome. |  |    
  |noise_loc, noise_scale | 0.05, 0.05 | Small noise to replicate biological noise |  |
  | d0_range | 0-19 | Typical Value is 5-15 |  |
  |threshold_percent | 30??? | NEED TO JUSTIFY| |
