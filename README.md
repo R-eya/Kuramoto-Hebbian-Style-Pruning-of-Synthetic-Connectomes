@@ -5,7 +5,7 @@ Description
 ## Flow Chart 
 
 ```mermaid
-flowchart LR
+flowchart TD
 
     subgraph Inputs ["Data sources"]
         direction TB
