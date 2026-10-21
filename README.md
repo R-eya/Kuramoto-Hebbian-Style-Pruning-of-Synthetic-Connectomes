@@ -14,7 +14,7 @@ flowchart LR
     end
     style Inputs fill:#e8f4fd,stroke:#2b6cb0,stroke-width:2px
 
-    Q[("Schaefer 2018 Atlas <br> (100 ROIs)")] -->|Extract Euclidian Distances| W[Connection Probability Model] -->C
+    Q[("Schaefer 2018 Atlas <br> (100 ROIs)")] -->|Extract Euclidian Distances between ROIs| W[Connection Probability Model] -->C
 
     G([Calculate Intrinsic Frequencies for each node]) --> E[Kuramoto Dynamics]
     A[(Nilearn Developmental fMRI)] -->B[Reference fMRI Metrics]--> C(("Compare Graph Metrics <br> (Minimise RMSD)" )) -->|Sweep over d_0 | D[Create Calibrated Synthetic Connectome]
