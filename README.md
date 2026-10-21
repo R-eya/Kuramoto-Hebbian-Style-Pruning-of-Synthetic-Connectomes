@@ -6,6 +6,13 @@ Description
 
 ```mermaid
 flowchart LR
+
+    subgraph Inputs ["Data sources"]
+        direction TB
+        Q[("Schaefer 2018 atlas<br/>(100 ROIs)")]
+        A[("Nilearn developmental fMRI")]
+    end
+
     Q[("Schaefer 2018 Atlas <br> (100 ROIs)")] -->|Extract Euclidian Distances| W[Connection Probability Model] -->C
 
     G([Calculate Intrinsic Frequencies for each node]) --> E[Kuramoto Dynamics]
@@ -14,9 +21,11 @@ flowchart LR
 
     F([Calculate Critical Coupling Constant and Range of Values to Sweep]) --> E
 
-   %% Grouping Kuramoto Dynamics and its internal subroutine
-    subgraph Kuramoto_Simulation ["Coupling Constant Sweep"]
-        E[Kuramoto Dynamics] <--> I[Hebbian Pruning]
+    subgraph Sweep ["Coupling constant sweep"]
+        direction TB
+        E["Kuramoto dynamics"]
+        H["Hebbian pruning"]
+        E <-->|"Update Weights"| H
     end
 ```
 
