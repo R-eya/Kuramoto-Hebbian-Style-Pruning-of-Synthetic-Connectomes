@@ -61,7 +61,8 @@ classDef hidden display:none;
 ### Connectome Generation
 $$
 P_{ij} = A \exp\left(-\frac{D_{ij}}{d_0}\right)
-$$ <br>
+$$
+
 [[1]](#1)
 
 - $D_{ij}$: Euclidean distance between regions $i$ and $j$
@@ -71,7 +72,8 @@ $$ <br>
 ### Kuramoto Equation
 $$
 \frac{d \theta_i}{dx} = E\omega_i + K\sum_{j=0}^{N}B_{ij}W_{ij}\sin(\theta_j - \theta_i) 
-$$ <br>
+$$
+
 [[2]](#2)
 
 
