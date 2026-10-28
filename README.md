@@ -66,11 +66,13 @@ $$
 - $D_{ij}$: Euclidean distance between regions $i$ and $j$
 - $d_0$: spatial scale of the distance cost, fitted by sweeping over a range of values
 - $A$: fixed scaling factor (`scaling_factor = 10` in `config.py`)
+[[1]](#1)
 
 ### Kuramoto Equation
 $$
 \frac{d \theta_i}{dx} = E\omega_i + K\sum_{j=0}^{N}B_{ij}W_{ij}\sin(\theta_j - \theta_i) 
 $$
+[[2]](#2)
 
 
 ### Coupling Constant
@@ -89,11 +91,11 @@ $$
   
  | Parameter | Value | Justification | Source |
  | :--- | :--- | :--- | :--- |
- | n_rois | 100 | Memory | Schaefer et al. 2018 [[1]](#1) |
+ | n_rois | 100 | Memory | Schaefer et al. 2018 [[3]](#3) |
  | seed | 10 | Reproducibility | none |
  |scaling_factor | 10.0 | Representative of many strong connections in the early connectome. | none |    
  |noise_loc, noise_scale | 0.05, 0.05 | Small noise to replicate biological noise | none |
- | d0_range | 0-19 | Typical Value is 5-15 for region to region in humans.|  [[2]](#2)|
+ | d0_range | 0-19 | Typical Value is 5-15 for region to region in humans.|  [[4]](#4)|
  | threshold_percent | 30 | Keeps top 70% of edges, dense to represent unpruned network | none |
 
  </details>
@@ -118,7 +120,7 @@ $$
   
    | Parameter | Value | Justification | Source |
    | :--- | :--- | :--- | :--- |
-   |alpha_max, alpha_min| 12.0, 8.0| Alpha range band|  [[3]](#3) |
+   |alpha_max, alpha_min| 12.0, 8.0| Alpha range band|  [[5]](#5) |
    |node_strength_proportion | 0.5 | The amount that the node strengths affect the intrinsic frequencies of each region i.e. hubs will have higher node strengths and therefore a stronger "pull" (intrinsic frequency) | Modelling choice|
 
    </details>
@@ -136,10 +138,14 @@ $$
 
 
    ## References
+   [1] Ercsey-Ravasz M, Markov NT, Lamy C, Van Essen DC, Knoblauch K, Toroczkai Z, Kennedy H. A predictive network model of cerebral cortical connectivity based on a distance rule. Neuron. 2013 Oct 2;80(1):184-97. doi: 10.1016/j.neuron.2013.07.036. Epub 2013 Oct 2. PMID: 24094111; PMCID: PMC3954498.
+   
+   [2] https://www.math.nagoya-u.ac.jp/~richard/teaching/f2025/SML_Harumi.pdf
 
-   [1] https://nilearn.github.io/dev/modules/generated/nilearn.datasets.fetch_atlas_schaefer_2018.html
+   [3] https://nilearn.github.io/dev/modules/generated/nilearn.datasets.fetch_atlas_schaefer_2018.html
 
-   [2] Cirunay, Michelle & Ódor, Géza & Papp, István & Deco, Gustavo. (2025). Scale-free behavior of weight distributions of connectomes. Physical Review Research. 7. 10.1103/PhysRevResearch.7.013134. 
-   [3] ref:https://www.sciencedirect.com/topics/medicine-and-dentistry/alpha-wave
+   [4] Cirunay, Michelle & Ódor, Géza & Papp, István & Deco, Gustavo. (2025). Scale-free behavior of weight distributions of connectomes. Physical Review Research. 7. 10.1103/PhysRevResearch.7.013134. 
+   
+   [5] ref:https://www.sciencedirect.com/topics/medicine-and-dentistry/alpha-wave
 
    
