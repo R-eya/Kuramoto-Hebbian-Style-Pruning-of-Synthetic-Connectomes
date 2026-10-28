@@ -81,7 +81,7 @@ $$
 - $\omega_i$: Intrinsic frequency of ith RoI
 - $K$: Kuramoto Coupling Strength
 - $B_{ij}$: Binary matrix representing connections
-- $W_{ij}: Weight matrix of connections
+- $W_{ij}$$: Weight matrix of connections
 
 
 ### Coupling Constant
