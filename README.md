@@ -89,12 +89,12 @@ $$
   
  | Parameter | Value | Justification | Source |
  | :--- | :--- | :--- | :--- |
- | n_rois | 100 | Memory | Schaefer et al. 2018 |
+ | n_rois | 100 | Memory | Schaefer et al. 2018 [[1]](#1) |
  | seed | 10 | Reproducibility | none |
- |scaling_factor | 10.0 | Representative of many strong connections in the early connectome. |  |    
- |noise_loc, noise_scale | 0.05, 0.05 | Small noise to replicate biological noise |  |
- | d0_range | 0-19 | Typical Value is 5-15 |  |
- |threshold_percent | 30 | Keeps top 70% of edges, dense to represent unpruned network | |
+ |scaling_factor | 10.0 | Representative of many strong connections in the early connectome. | none |    
+ |noise_loc, noise_scale | 0.05, 0.05 | Small noise to replicate biological noise | none |
+ | d0_range | 0-19 | Typical Value is 5-15 for region to region in humans.|  [[2]](#2)|
+ | threshold_percent | 30 | Keeps top 70% of edges, dense to represent unpruned network | none |
 
  </details>
 
@@ -104,12 +104,12 @@ $$
   | Parameter | Value | Justification | Source |
   | :--- | :--- | :--- | :--- |
   |dt | 0.01 | Integration Step| Convergence test |
-  |eta| 5e-4 | Learning Rate | |
+  |eta| 5e-4 | Learning Rate | none |
   |time_steps| 2000 | Running for 2 years | 1000 time-steps is approx 1 year between ages 1-2years |
-  |w_min| 0.1| Pruning threshold | |
-  |record_each| 100 | Storage - to be used to show the dynamic pruning| |
+  |w_min| 0.1| Pruning threshold | none |
+  | record_each| 100 | Storage - to be used to show the dynamic pruning| none |
   |sync_reward, desync penalty| 0.5 | phase synchronisation is rewarded half as much as desynchronisation is penalised to mitigate random hubs forming due to noise|
-  | intrinsic_frequency_effect | 5 | Modelling choice to promote hubs formings | |
+  |intrinsic_frequency_effect | 5 | Modelling choice to promote hubs forming | none |
 
   </details>
 
@@ -118,7 +118,7 @@ $$
   
    | Parameter | Value | Justification | Source |
    | :--- | :--- | :--- | :--- |
-   |alpha_max, alpha_min| 12.0, 8.0| Alpha range band|  ref:https://www.sciencedirect.com/topics/medicine-and-dentistry/alpha-wave |
+   |alpha_max, alpha_min| 12.0, 8.0| Alpha range band|  [[3]](#3) |
    |node_strength_proportion | 0.5 | The amount that the node strengths affect the intrinsic frequencies of each region i.e. hubs will have higher node strengths and therefore a stronger "pull" (intrinsic frequency) | Modelling choice|
 
    </details>
@@ -128,8 +128,18 @@ $$
     
    | Parameter | Value | Justification | Source |
    | :--- | :--- | :--- | :--- |
-   |sigma | (alpha_max - alpha_min)*2*np.pi / np.sqrt(12) | std for alpha frequency range| |
-   |k_max_factor | 3.0 | Sweep of k goes up to k_max_factor*K_c| |
-   |number_of_k_values | 25 | Resolution of K sweep| |
+   |sigma | (alpha_max - alpha_min)*2*np.pi / np.sqrt(12) | std for alpha frequency range| none |
+   |k_max_factor | 3.0 | Sweep of k goes up to k_max_factor*K_c| none |
+   |number_of_k_values | 25 | Resolution of K sweep| none |
    
    </details>
+
+
+   ## References
+
+   [1] https://nilearn.github.io/dev/modules/generated/nilearn.datasets.fetch_atlas_schaefer_2018.html
+
+   [2] Cirunay, Michelle & Ódor, Géza & Papp, István & Deco, Gustavo. (2025). Scale-free behavior of weight distributions of connectomes. Physical Review Research. 7. 10.1103/PhysRevResearch.7.013134. 
+   [3] ref:https://www.sciencedirect.com/topics/medicine-and-dentistry/alpha-wave
+
+   
