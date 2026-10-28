@@ -76,13 +76,18 @@ $$
 
 [[2]](#2)
 
+- $\frac{d \theta_i}{dx}$: Rate of change of phase of ith ROI
+- $E$: Modelling choice to promote formation of hubs
+- $\omega_i$: Intrinsic frequency of ith RoI
+- $K$: Kuramoto Coupling Strength
+- $B_{ij}$: Binary matrix representing connections
+- $W_{ij}: Weight matrix of connections
+
 
 ### Coupling Constant
  $K_c = \sigma \sqrt{8 / \pi} / \lambda_{max}$
- 
 
-
-
+ [[3]](#3)
 
 
 
@@ -93,11 +98,11 @@ $$
   
  | Parameter | Value | Justification | Source |
  | :--- | :--- | :--- | :--- |
- | n_rois | 100 | Memory | Schaefer et al. 2018 [[3]](#3) |
+ | n_rois | 100 | Memory | Schaefer et al. 2018 [[4]](#4) |
  | seed | 10 | Reproducibility | none |
  |scaling_factor | 10.0 | Representative of many strong connections in the early connectome. | none |    
  |noise_loc, noise_scale | 0.05, 0.05 | Small noise to replicate biological noise | none |
- | d0_range | 0-19 | Typical Value is 5-15 for region to region in humans.|  [[4]](#4)|
+ | d0_range | 0-19 | Typical Value is 5-15 for region to region in humans.|  [[5]](#5)|
  | threshold_percent | 30 | Keeps top 70% of edges, dense to represent unpruned network | none |
 
  </details>
@@ -122,7 +127,7 @@ $$
   
    | Parameter | Value | Justification | Source |
    | :--- | :--- | :--- | :--- |
-   |alpha_max, alpha_min| 12.0, 8.0| Alpha range band|  [[5]](#5) |
+   |alpha_max, alpha_min| 12.0, 8.0| Alpha range band|  [[6]](#6) |
    |node_strength_proportion | 0.5 | The amount that the node strengths affect the intrinsic frequencies of each region i.e. hubs will have higher node strengths and therefore a stronger "pull" (intrinsic frequency) | Modelling choice|
 
    </details>
@@ -144,10 +149,12 @@ $$
    
    [2] https://www.math.nagoya-u.ac.jp/~richard/teaching/f2025/SML_Harumi.pdf
 
-   [3] https://nilearn.github.io/dev/modules/generated/nilearn.datasets.fetch_atlas_schaefer_2018.html
+   [3] https://mathoverflow.net/questions/115139/finding-kuramoto-model-coupling-strength-with-limits
 
-   [4] Cirunay, Michelle & Ódor, Géza & Papp, István & Deco, Gustavo. (2025). Scale-free behavior of weight distributions of connectomes. Physical Review Research. 7. 10.1103/PhysRevResearch.7.013134. 
+   [4] https://nilearn.github.io/dev/modules/generated/nilearn.datasets.fetch_atlas_schaefer_2018.html
+
+   [5] Cirunay, Michelle & Ódor, Géza & Papp, István & Deco, Gustavo. (2025). Scale-free behavior of weight distributions of connectomes. Physical Review Research. 7. 10.1103/PhysRevResearch.7.013134. 
    
-   [5] ref:https://www.sciencedirect.com/topics/medicine-and-dentistry/alpha-wave
+   [6] ref:https://www.sciencedirect.com/topics/medicine-and-dentistry/alpha-wave
 
    
