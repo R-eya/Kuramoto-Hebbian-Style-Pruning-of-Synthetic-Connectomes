@@ -61,17 +61,17 @@ classDef hidden display:none;
 ### Connectome Generation
 $$
 P_{ij} = A \exp\left(-\frac{D_{ij}}{d_0}\right)
-$$
+$$ <br>
+[[1]](#1)
 
 - $D_{ij}$: Euclidean distance between regions $i$ and $j$
 - $d_0$: spatial scale of the distance cost, fitted by sweeping over a range of values
-- $A$: fixed scaling factor (`scaling_factor = 10` in `config.py`)
-[[1]](#1)
+- $A$: fixed scaling factor (`scaling_factor = 10` in `config.py`) 
 
 ### Kuramoto Equation
 $$
 \frac{d \theta_i}{dx} = E\omega_i + K\sum_{j=0}^{N}B_{ij}W_{ij}\sin(\theta_j - \theta_i) 
-$$
+$$ <br>
 [[2]](#2)
 
 
