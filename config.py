@@ -11,7 +11,7 @@ class Config:
     noise_loc: float = 0.05
     noise_scale: float = 0.05
     d0_range: tuple = tuple(range(0, 20))
-    threshold_percent: float = 60
+    threshold_percent: float = 30
 
     # Kuramoto
     dt: float = 0.01
