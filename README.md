@@ -84,10 +84,14 @@ $$
 - $W_{ij}$: Weight matrix of connections
 
 
-### Coupling Constant
+### Coupling Strength
  $K_c = \sigma \sqrt{8 / \pi} / \lambda_{max}$
 
  [[3]](#3)
+
+ - $K_c$ - Critical Coupling Strength
+ - $\sigma$ - std for alpha frequency band (`sigma = 1(alpha_max - alpha_min)*2*np.pi / np.sqrt(12)` in `config.py`) 
+ - $\lambda_{max}$ - The max eigenvalue of the weight matrix 
 
 
 
