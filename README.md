@@ -74,7 +74,7 @@ $$
 \frac{d \theta_i}{dx} = E\omega_i + K\sum_{j=0}^{N}B_{ij}W_{ij}\sin(\theta_j - \theta_i) 
 $$
 
-[[2]](#2)
+[[2]](#https://www.math.nagoya-u.ac.jp/~richard/teaching/f2025/SML_Harumi.pdf)
 
 - $\frac{d \theta_i}{dx}$: Rate of change of phase of ith ROI
 - $E$: Modelling choice to promote formation of hubs
