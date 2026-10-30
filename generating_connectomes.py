@@ -56,8 +56,10 @@ class Connectome_Generator:
         np.fill_diagonal(W, 0)
         return W
 
-    def reference_metreics(self):
-        dataset = datasets.fetch_development_fmri(n_subjects = 1, age_group = 'child', data_dir=self.data_dir)
+    @staticmethod
+    def reference_metreics(self, dataset=None):
+        if dataset == None:
+            dataset = datasets.fetch_development_fmri(n_subjects = 1, age_group = 'child', data_dir=self.data_dir)
         masker = NiftiLabelsMasker(labels_img=self.map_filepath, 
                        standardize='zscore_sample', 
                        memory='nilearn_cache')

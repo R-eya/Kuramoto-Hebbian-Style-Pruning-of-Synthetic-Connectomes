@@ -1,3 +1,4 @@
+import os
 from config import Config
 from generating_connectomes import Connectome_Generator
 from Coupling_constant import K_values
@@ -5,6 +6,7 @@ from kuramoto import K_Sweep
 from plot import ConnectomePlotter
 
 def main(cfg :Config = Config()):
+    os.mkdir("Results")
     generator = Connectome_Generator(cfg)
     W_0 = generator.generate_connectome()
 
@@ -13,7 +15,7 @@ def main(cfg :Config = Config()):
     results = K_Sweep(W_0, K_values=K_vals, generator = generator, cfg=cfg)
 
     plotter = ConnectomePlotter()
-    plotter. plot_sweep(W0=W_0, Results=results, K_values=K_vals, save_path="Comparison_Kvals.png",row_indices=None)
+    plotter. plot_sweep(W0=W_0, Results=results, K_values=K_vals, save_path="./Results/Comparison_Kvals.png",row_indices=None)
 
     return W_0, K_vals, K_c, results
 

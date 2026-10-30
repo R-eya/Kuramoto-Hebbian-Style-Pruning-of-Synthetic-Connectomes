@@ -12,6 +12,7 @@ neuro_venv/
 *.npy
 nilearn_data/
 nilearn_cache/
+Results/
 
 # Generated plots/images
 mat_plot*

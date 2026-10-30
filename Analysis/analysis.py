@@ -1,9 +1,9 @@
 import numpy as np
 import bct
 import matplotlib.pyplot as plt
-from config import Config
-from master import main
-from generating_connectomes import Connectome_Generator
+from ..config import Config
+from ..master import main
+from ..generating_connectomes import Connectome_Generator
 
 
 class Analysis:
