@@ -33,3 +33,8 @@ class Config:
     sigma: float = (alpha_max - alpha_min)*2*np.pi / np.sqrt(12)
     k_max_factor: float = 3.0
     number_of_k_values: int = 25
+
+    # Analysis
+    compare_asd: bool = 1
+    compare_sz: bool = 1
+    compare_nt: bool = 1

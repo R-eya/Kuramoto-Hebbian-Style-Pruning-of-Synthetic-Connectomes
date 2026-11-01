@@ -6,7 +6,6 @@ from kuramoto import K_Sweep
 from plot import ConnectomePlotter
 
 def main(cfg :Config = Config()):
-    os.mkdir("Results")
     generator = Connectome_Generator(cfg)
     W_0 = generator.generate_connectome()
 
@@ -21,6 +20,8 @@ def main(cfg :Config = Config()):
 
 
 if __name__ == "__main__":
+    if not os.path.exists("Results"):
+        os.mkdir("Results")
     main()
 
 #### Figure out what timeframe to use and calc timesteps accordingly -- a lot of papers take 1000 weight updates as 1 year

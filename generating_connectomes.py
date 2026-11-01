@@ -56,7 +56,6 @@ class Connectome_Generator:
         np.fill_diagonal(W, 0)
         return W
 
-    @staticmethod
     def reference_metreics(self, dataset=None):
         if dataset == None:
             dataset = datasets.fetch_development_fmri(n_subjects = 1, age_group = 'child', data_dir=self.data_dir)
@@ -64,6 +63,10 @@ class Connectome_Generator:
                        standardize='zscore_sample', 
                        memory='nilearn_cache')
         cluster_all, path_length_all, density_all = [], [], []
+
+        if not dataset.func:
+            raise ValueError("reference_metreics received no fMRI files.")
+        
         for fmri_file, confounds_file in zip(dataset.func, dataset.confounds):
             time_series = masker.fit_transform(fmri_file, confounds= confounds_file)
             correlation_measure = ConnectivityMeasure(kind = 'correlation')  
