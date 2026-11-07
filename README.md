@@ -60,7 +60,7 @@ classDef hidden display:none;
 ## Results
 
 <details>
-<summary><b>Figure 2: Full K-sweep (click to expand)</b></summary>
+<summary><b>Figure 1: Pruned Synthetic Connectomes over K range </b></summary>
 
 <br>
 
