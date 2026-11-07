@@ -71,7 +71,7 @@ classDef hidden display:none;
 <table>
   <tr>
     <td align="center" valign="top" width="50%">
-        <b>Figure 2: Path length, Clustering Coefficient, and Density of results against coupling strength</b><br>
+        <b>Figure 2: Path length, Clustering Coefficient, and Density of results against Coupling Strength</b><br>
       <img src="Display_Images/Graph_Metrics.png" width="380" alt="Graph metrics across K"><br>
       <p align="left">
         For majority of K values, there is no significant change of any metric.
