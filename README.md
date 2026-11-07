@@ -68,13 +68,25 @@ classDef hidden display:none;
 
 </details>
 
-
-![Graph metrics across K](Display_Images/Graph_Metrics.png)
-
-*Figure 2: Path length, Clustering Coefficient, and Density of results against coupling strength.*
-
-For majority of K values, there is no significant change of any metric.
+<table>
+  <tr>
+    <td align="center" valign="top" width="50%">
+      <img src="Display_Images/Graph_Metrics.png" width="380" alt="Graph metrics across K"><br>
+      <em>Figure 2: Path length, Clustering Coefficient, and Density of results against coupling strength.</em>
+      <p align="left">
+        For majority of K values, there is no significant change of any metric.
 At values of K much higher than the critical coupling constant, path length decreases while density and clustering coefficient increase.
+      </p>
+    </td>
+    <td align="center" valign="top" width="50%">
+      <img src="Display_Images/RMSD_ASD.png" width="380" alt="RMSD to ASD reference across K"><br>
+      <em>Figure 3: RMSD to the ASD reference</em>
+      <p align="left">
+        As K increases, the pruned synthetic connectome's graph metrics get overall closer to those of the ASD reference connectome.
+      </p>
+    </td>
+  </tr>
+</table>
 
 ## 🌟 Quick Start
 
