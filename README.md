@@ -76,7 +76,7 @@ $$
 
 [[2]](#2)
 
-- $\frac{d \theta_i}{dx}$: Rate of change of phase of ith ROI
+- $\frac{d \theta_i}{dt}$: Rate of change of phase of ith ROI
 - $E$: Modelling choice to promote formation of hubs
 - $\omega_i$: Intrinsic frequency of ith RoI
 - $K$: Kuramoto Coupling Strength

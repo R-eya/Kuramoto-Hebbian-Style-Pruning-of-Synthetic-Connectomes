@@ -56,7 +56,7 @@ class Connectome_Generator:
         np.fill_diagonal(W, 0)
         return W
 
-    def reference_metreics(self, dataset=None):
+    def reference_metrics(self, dataset=None):
         if dataset == None:
             dataset = datasets.fetch_development_fmri(n_subjects = 1, age_group = 'child', data_dir=self.data_dir)
         masker = NiftiLabelsMasker(labels_img=self.map_filepath, 
@@ -65,7 +65,7 @@ class Connectome_Generator:
         cluster_all, path_length_all, density_all = [], [], []
 
         if not dataset.func:
-            raise ValueError("reference_metreics received no fMRI files.")
+            raise ValueError("reference_metrics received no fMRI files.")
         
         for fmri_file, confounds_file in zip(dataset.func, dataset.confounds):
             time_series = masker.fit_transform(fmri_file, confounds= confounds_file)
@@ -113,7 +113,7 @@ class Connectome_Generator:
         rng = np.random.RandomState(self.cgf.seed)
         self.load_atlas()
         self.euclidean_dist()
-        self.reference_metreics()
+        self.reference_metrics()
         self.d_0_Sweep(rng)
         self.W = self.create_matrix(rng)
         return self.W

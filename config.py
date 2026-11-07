@@ -36,5 +36,5 @@ class Config:
 
     # Analysis
     compare_asd: bool = 1
-    compare_sz: bool = 1
-    compare_nt: bool = 1
+    compare_sz: bool = 0
+    compare_nt: bool = 0

@@ -2,6 +2,7 @@ import numpy as np
 import bct
 import matplotlib.pyplot as plt
 import pandas as pd
+import openneuro as on
 from nilearn import datasets
 from sklearn.utils import Bunch
 from config import Config
@@ -58,54 +59,124 @@ class Analysis:
             & (pheno["AGE_AT_SCAN"] < 25)
             & (pheno["FILE_ID"] != "no_filename")
         ]
-        n_subjects_selected = select.shape[0] 
+        self.n_subjects_selected_asd = select.shape[0] 
         n_subjects = 1
         idx = select.index[:n_subjects]
         asd_dataset = Bunch(
             func=[abide.func_preproc[i] for i in idx],
             confounds=[None] * len(idx),   
         )
-        self.load_atlas()          
-        self.euclidean_dist()      
-        self.reference_metreics(dataset=asd_dataset)
+      
+        self.reference_metrics(dataset=asd_dataset)
         print("L_ref:", self.L_ref)
         print("C_ref:", self.C_ref)
         print("D_ref:", self.D_ref)
-        print("Number of Connectomes in average", n_subjects_selected)
+
+
+    def Compare_NT(self):
+        abide = datasets.fetch_abide_pcp(
+        n_subjects = 5,
+        pipeline="cpac",
+        derivatives=["func_preproc"],
+        quality_checked=True,
+                )
+        pheno = pd.DataFrame(abide.phenotypic)
+        select = pheno[
+            (pheno["DX_GROUP"] == 0)
+            & (pheno["AGE_AT_SCAN"] < 25)
+            & (pheno["FILE_ID"] != "no_filename")
+        ]
+        self.n_subjects_selected_nt = select.shape[0] 
+        n_subjects = 1
+        idx = select.index[:n_subjects]
+        nt_dataset = Bunch(
+            func=[abide.func_preproc[i] for i in idx],
+            confounds=[None] * len(idx),   
+        )
+      
+        self.reference_metrics(dataset=nt_dataset)
+
+    def Compare_sz(self):
+        raise NotImplementedError
+        url = "https://openneuro.org"
+        try:
+            df = pd.read_csv(url, sep='\t')
+        except Exception:
+            url = "https://openneuro.org"
+            df = pd.read_csv(url, sep='\t')
+
+        select = df[
+        (df['age'] < 25) & 
+        (df['Group'].str.lower().str.contains('schizophrenia', na=False))
+        ]
+        target = select['participant_id'].to_list()[:5] # First 5 participants
+        include = [f"derivatives/fmriprep/{sub}/func/*task-rest*space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz" for sub in target]
+
+        if len(include) > 0:
+        
+            tcp = on.download(
+                dataset="ds005237",
+                target_dir="./tcp_filtered_young_sz",
+                include=include
+            )
+        else:
+            raise Exception("Nothing included in dataset")
+
+        self.reference_metrics(dataset=tcp)
+        
+        
 
     def results_graph_metrics(self):
-        self.results_graph_metrics = []
+        self.results_graph_metrics_ = []
         for result in self.results:
-            self.results_graph_metrics.append(self.graph_metrics())
+            self.results_graph_metrics_.append(self.graph_metrics(result))
 
 
     def compare_rmsd(self):
+        self.load_atlas()          
+        self.euclidean_dist()
         self.results_graph_metrics()
-        L = [item[0] for item in self.results_graph_metrics]
-        C = [item[1] for item in self.results_graph_metrics]
-        D = [item[2] for item in self.results_graph_metrics]
+        L = np.array([item[0] for item in self.results_graph_metrics_])
+        C = np.array([item[1] for item in self.results_graph_metrics_])
+        D = np.array([item[2] for item in self.results_graph_metrics_])
 
         if self.config.compare_asd:
             self.Compare_ASD()
 
-            RMSD_asd = np.sqrt((L - self.L_ref)**2 + (C - self.C_ref)**2 + (D - self.D_ref)**2)
+            self.RMSD_asd = np.sqrt(((L - self.L_ref)/ self.L_ref )**2 + ((C - self.C_ref)/ self.C_ref)**2 + ((D - self.D_ref)/ self.D_ref)**2)**0.5
 
         if self.config.compare_nt:
-            pass
+            self.Compare_NT()
+            self.RMSD_nt = np.sqrt(((L - self.L_ref)/ self.L_ref )**2 + ((C - self.C_ref)/ self.C_ref)**2 + ((D - self.D_ref)/ self.D_ref)**2)**0.5
+
+        if self.config.compare_sz:
+            raise NotImplementedError
+
+
+    def Plot_RMSD_Comparison(self):
+        self.compare_rmsd()
+        if self.config.compare_asd:
+            plt.plot(self.K_vals, self.RMSD_asd, color='red', label = f"RMSD of results to average of {self.n_subjects_selected_asd} ASD Connectomes")
+            plt.xlabel("K value")
+            plt.ylabel("RMSD")
+            plt.legend()
+            plt.savefig('RMSD_ASD.png')
+
+        if self.config.compare_nt:
+            plt.plot(self.K_vals, self.RMSD_nt, color='blue', label = f"RMSD of results to average of {self.n_subjects_selected_nt} NT Connectomes")
+            plt.xlabel("K value")
+            plt.ylabel("RMSD")
+            plt.legend()
+            plt.savefig('RMSD_NT.png')
         if self.config.compare_sz:
             pass
 
 
 
-
-
-
-
-               
-
-
-analyser = Analysis()
-analyser.Compare_ASD()
+if __name__ == "__main__":
+    analyser = Analysis()
+    analyser.Plot_RMSD_Comparison()
+    analyser.plot_metric_change()
 
 
  
