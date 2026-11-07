@@ -60,7 +60,7 @@ classDef hidden display:none;
 ## Results
 
 <details>
-<summary><b>**Figure 1: Pruned Synthetic Connectomes over K range**</b></summary>
+<summary><b>Figure 1: Pruned Synthetic Connectomes over K range</b></summary>
 
 <br>
 
@@ -72,7 +72,7 @@ classDef hidden display:none;
   <tr>
     <td align="center" valign="top" width="50%">
       <img src="Display_Images/Graph_Metrics.png" width="380" alt="Graph metrics across K"><br>
-      <em>**Figure 2: Path length, Clustering Coefficient, and Density of results against coupling strength**</em>
+      <b>**Figure 2: Path length, Clustering Coefficient, and Density of results against coupling strength**</b>
       <p align="left">
         For majority of K values, there is no significant change of any metric.
 At values of K much higher than the critical coupling constant, path length decreases while density and clustering coefficient increase.
@@ -80,7 +80,7 @@ At values of K much higher than the critical coupling constant, path length decr
     </td>
     <td align="center" valign="top" width="50%">
       <img src="Display_Images/RMSD_ASD.png" width="380" alt="RMSD to ASD reference across K"><br>
-      <em>**Figure 3: RMSD to the ASD reference**</em>
+      <b>**Figure 3: RMSD to the ASD reference**</b>
       <p align="left">
         As K increases, the pruned synthetic connectome's graph metrics get overall closer to those of the ASD reference connectome.
       </p>
