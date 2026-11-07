@@ -136,7 +136,9 @@ $$
 
 
 ### Coupling Strength
- $K_c = \sigma \sqrt{8 / \pi} / \lambda_{max}$
+ $$
+ K_c = \sigma \sqrt{8 / \pi} / \lambda_{max}
+ $$
 
  [[3]](#3)
 
