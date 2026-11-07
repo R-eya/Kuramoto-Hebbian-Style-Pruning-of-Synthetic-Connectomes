@@ -56,6 +56,11 @@ style kurma fill:#fdf0e6,stroke:#fdf0e6,stroke-width:2px
 %% Hide the passthrough node so the line looks continuous
 classDef hidden display:none;
 ```
+
+## Results
+
+![Pruned Synthetic Connectome over K range](/Display_Images/Comparison_Kvals.png) 
+
 ## 🌟 Quick Start
 
 ```bash
