@@ -56,6 +56,25 @@ style kurma fill:#fdf0e6,stroke:#fdf0e6,stroke-width:2px
 %% Hide the passthrough node so the line looks continuous
 classDef hidden display:none;
 ```
+## 🌟 Quick Start
+
+```bash
+# Clone the repo
+git clone https://github.com/R-eya/Kuramoto-Hebbian-Style-Pruning-of-Synthetic-Connectomes.git
+cd Kuramoto-Hebbian-Style-Pruning-of-Synthetic-Connectomes
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Generate the synthetic connectome, run the Kuramoto Coupling Strength sweep and produce K-value Comparison Figure
+python master.py
+
+# Run comparison of results to ASD connectomes
+python analysis.py
+```
+
+Outputs are written to `Results/`. The first run downloads the Schaefer atlas and reference fMRI data so may take a few minutes.
+
 
 ## Model Decisions
 ### Connectome Generation
@@ -153,12 +172,12 @@ $$
    
    [2] https://www.math.nagoya-u.ac.jp/~richard/teaching/f2025/SML_Harumi.pdf
 
-   [3] https://mathoverflow.net/questions/115139/finding-kuramoto-model-coupling-strength-with-limits
+   [3] Acebrón et al., “The Kuramoto model,” Rev. Mod. Phys. 77, 137 (2005)
 
    [4] https://nilearn.github.io/dev/modules/generated/nilearn.datasets.fetch_atlas_schaefer_2018.html
 
    [5] Cirunay, Michelle & Ódor, Géza & Papp, István & Deco, Gustavo. (2025). Scale-free behavior of weight distributions of connectomes. Physical Review Research. 7. 10.1103/PhysRevResearch.7.013134. 
    
-   [6] ref:https://www.sciencedirect.com/topics/medicine-and-dentistry/alpha-wave
+   [6] https://www.sciencedirect.com/topics/medicine-and-dentistry/alpha-wave
 
    
