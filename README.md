@@ -68,6 +68,15 @@ classDef hidden display:none;
 
 </details>
 
+The clustering coefficient and path length change smoothly as K increases,
+with the largest shift near the critical coupling K_c.
+
+![Graph metrics across K](figures/fig1_K_sweep.png)
+
+*Figure 1: Path length, clustering, and density as coupling strength K increases.*
+
+At low K, the network stays close to its initial structure. Above K_c, ...
+
 ## 🌟 Quick Start
 
 ```bash
