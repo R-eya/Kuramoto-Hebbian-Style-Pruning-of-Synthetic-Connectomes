@@ -8,6 +8,7 @@ from sklearn.utils import Bunch
 from config import Config
 from master import main
 from generating_connectomes import Connectome_Generator
+from Coupling_constant import K_values
 
 
 class Analysis:
@@ -39,12 +40,16 @@ class Analysis:
 
         plt.plot(self.K_vals, self.path_length_res, color='red')
         plt.plot(self.K_vals, self.cluster_res, color='green')
-        plt.plot(self.K_vals, self.density_res, color='blue')     
+        plt.plot(self.K_vals, self.density_res, color='blue')
+        plt.plot(self.K_c, color = 'black', linestyle = '-')   
 
-        plt.xlabel('K Values')
+        plt.axvline(self.K_c, color='black', linestyle=':', label=f'K_c = {self.K_c:.3f}')
 
+        plt.xlabel('K Value')
+        plt.ylabel('Change in metric')
         plt.legend()
-        plt.savefig('Graph_Metrics.png')
+        plt.savefig('./Results/Graph_Metrics.png', dpi=200, bbox_inches='tight')
+        plt.close()
 
     def Compare_ASD(self):
         abide = datasets.fetch_abide_pcp(
