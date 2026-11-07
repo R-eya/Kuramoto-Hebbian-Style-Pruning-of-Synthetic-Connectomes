@@ -59,7 +59,14 @@ classDef hidden display:none;
 
 ## Results
 
-![Pruned Synthetic Connectome over K range](/Display_Images/Comparison_Kvals.png) 
+<details>
+<summary><b>Figure 2: Full K-sweep (click to expand)</b></summary>
+
+<br>
+
+<img src="/Display_Images/Comparison_Kvals.png" width="700" alt="Pruned Synthetic Connectomes over K range">
+
+</details>
 
 ## 🌟 Quick Start
 
