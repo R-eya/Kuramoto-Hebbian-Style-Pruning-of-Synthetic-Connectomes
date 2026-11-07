@@ -30,24 +30,25 @@ class Analysis:
             self.density_res.append(D)
 
     def plot_metric_change(self):
-        k_min, k_max = np.min(self.K_vals), np.max(self.K_vals)
-        L_0, C_0, D_0 = self.graph_metrics(self.W_0)
-        plt.plot([k_min, k_max], [L_0, L_0], color='red', label='Mean Path Length')
-        plt.plot([k_min, k_max], [C_0, C_0], color='green', label='Mean Clustering Co-efficient')
-        plt.plot([k_min, k_max], [D_0, D_0], color='blue', label='Network Density')
+        plt.figure()
+        #k_min, k_max = np.min(self.K_vals), np.max(self.K_vals)
+        #L_0, C_0, D_0 = self.graph_metrics(self.W_0)
+        #plt.plot([k_min, k_max], [L_0, L_0], color='red', label='Mean Path Length')
+        #plt.plot([k_min, k_max], [C_0, C_0], color='green', label='Mean Clustering Co-efficient')
+        #plt.plot([k_min, k_max], [D_0, D_0], color='blue', label='Network Density')
 
         self.metrics_of_results()
 
-        plt.plot(self.K_vals, self.path_length_res, color='red')
-        plt.plot(self.K_vals, self.cluster_res, color='green')
-        plt.plot(self.K_vals, self.density_res, color='blue')
+        plt.plot(self.K_vals, self.path_length_res, color='red', label='Mean Path Length')
+        plt.plot(self.K_vals, self.cluster_res, color='green', label='Mean Clustering Co-efficient')
+        plt.plot(self.K_vals, self.density_res, color='blue', label='Network Density')
         plt.plot(self.K_c, color = 'black', linestyle = '-')   
 
         plt.axvline(self.K_c, color='black', linestyle=':', label=f'K_c = {self.K_c:.3f}')
 
         plt.xlabel('K Value')
-        plt.ylabel('Change in metric')
-        plt.legend()
+        plt.ylabel('Change in Metric')
+        plt.legend(loc='upper right')
         plt.savefig('./Results/Graph_Metrics.png', dpi=200, bbox_inches='tight')
         plt.close()
 
@@ -158,6 +159,7 @@ class Analysis:
     def Plot_RMSD_Comparison(self):
         self.compare_rmsd()
         if self.config.compare_asd:
+            plt.figure()
             plt.plot(self.K_vals, self.RMSD_asd, color='red', label = f"RMSD of results to average of {self.n_subjects_selected_asd} ASD Connectomes")
             plt.xlabel("K value")
             plt.ylabel("RMSD")
@@ -165,6 +167,7 @@ class Analysis:
             plt.savefig('./Results/RMSD_ASD.png')
 
         if self.config.compare_nt:
+            plt.figure()
             plt.plot(self.K_vals, self.RMSD_nt, color='blue', label = f"RMSD of results to average of {self.n_subjects_selected_nt} NT Connectomes")
             plt.xlabel("K value")
             plt.ylabel("RMSD")
