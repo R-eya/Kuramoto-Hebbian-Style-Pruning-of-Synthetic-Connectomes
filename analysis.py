@@ -68,9 +68,6 @@ class Analysis:
         )
       
         self.reference_metrics(dataset=asd_dataset)
-        print("L_ref:", self.L_ref)
-        print("C_ref:", self.C_ref)
-        print("D_ref:", self.D_ref)
 
 
     def Compare_NT(self):
@@ -160,14 +157,14 @@ class Analysis:
             plt.xlabel("K value")
             plt.ylabel("RMSD")
             plt.legend()
-            plt.savefig('RMSD_ASD.png')
+            plt.savefig('./Results/RMSD_ASD.png')
 
         if self.config.compare_nt:
             plt.plot(self.K_vals, self.RMSD_nt, color='blue', label = f"RMSD of results to average of {self.n_subjects_selected_nt} NT Connectomes")
             plt.xlabel("K value")
             plt.ylabel("RMSD")
             plt.legend()
-            plt.savefig('RMSD_NT.png')
+            plt.savefig('./Results/RMSD_NT.png')
         if self.config.compare_sz:
             pass
 

@@ -16,7 +16,6 @@ Results/
 
 # Generated plots/images
 mat_plot*
-*.png
 *.pdf
 *.svg
 *.html
