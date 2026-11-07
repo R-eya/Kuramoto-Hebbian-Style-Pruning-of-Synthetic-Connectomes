@@ -56,6 +56,25 @@ style kurma fill:#fdf0e6,stroke:#fdf0e6,stroke-width:2px
 %% Hide the passthrough node so the line looks continuous
 classDef hidden display:none;
 ```
+## 🌟 Quick Start
+
+```bash
+# Clone the repo
+git clone https://github.com/R-eya/Kuramoto-Hebbian-Style-Pruning-of-Synthetic-Connectomes.git
+cd Kuramoto-Hebbian-Style-Pruning-of-Synthetic-Connectomes
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Generate the synthetic connectome, run the Kuramoto Coupling Strength sweep and produce K-value Comparison Figure
+python master.py
+
+# Run comparison of results to ASD connectomes
+python analysis.py
+```
+
+Outputs are written to `Results/`. The first run downloads the Schaefer atlas and reference fMRI data so may take a few minutes.
+
 
 ## Model Decisions
 ### Connectome Generation
