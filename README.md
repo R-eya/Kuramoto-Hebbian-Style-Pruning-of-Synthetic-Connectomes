@@ -153,12 +153,12 @@ $$
    
    [2] https://www.math.nagoya-u.ac.jp/~richard/teaching/f2025/SML_Harumi.pdf
 
-   [3] https://mathoverflow.net/questions/115139/finding-kuramoto-model-coupling-strength-with-limits
+   [3] Acebrón et al., “The Kuramoto model,” Rev. Mod. Phys. 77, 137 (2005)
 
    [4] https://nilearn.github.io/dev/modules/generated/nilearn.datasets.fetch_atlas_schaefer_2018.html
 
    [5] Cirunay, Michelle & Ódor, Géza & Papp, István & Deco, Gustavo. (2025). Scale-free behavior of weight distributions of connectomes. Physical Review Research. 7. 10.1103/PhysRevResearch.7.013134. 
    
-   [6] ref:https://www.sciencedirect.com/topics/medicine-and-dentistry/alpha-wave
+   [6] https://www.sciencedirect.com/topics/medicine-and-dentistry/alpha-wave
 
    
