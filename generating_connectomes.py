@@ -79,7 +79,7 @@ class Connectome_Generator:
             cluster_all.append(C)
             density_all.append(D)
         self.L_ref = np.mean(path_length_all)
-        self. C_ref = np.mean(cluster_all)
+        self.C_ref = np.mean(cluster_all)
         self.D_ref = np.mean(density_all)
 
 
