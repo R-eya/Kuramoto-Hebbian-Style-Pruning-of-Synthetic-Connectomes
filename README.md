@@ -14,7 +14,7 @@ Followed by Kuramoto-Hebbian style pruning over a range of Kuramoto Coupling Str
 
 ❗It is intended to explore how a single control parameter (coupling strength K) changes network organisation, which may inform how future, more realistic models are designed.
 
-## 📈 Flow Chart 
+## Flow Chart 
 
 ```mermaid
 flowchart LR
