@@ -211,10 +211,10 @@ $$
    6- Some model choices aren't fitted, just chosen. <br>
 
    ## 🕘 Next Steps
-   [ ] Implement the comparison to NT and SZ connectomes. <br>
-   [ ] Fit model to a time-scale with references and add time-scale parameter. <br>
-   [ ] Implement the real vs null check. <br>
-   [ ] Compute the Kuramoto order parameter r(t) and plot over K values.   <br>
+   - [ ] Implement the comparison to NT and SZ connectomes. <br>
+   - [ ] Fit model to a time-scale with references and add time-scale parameter. <br>
+   - [ ] Implement the real vs null check. <br>
+   - [ ] Compute the Kuramoto order parameter r(t) and plot over K values.   <br>
 
 
    ## References
