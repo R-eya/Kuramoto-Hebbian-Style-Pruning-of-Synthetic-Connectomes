@@ -4,7 +4,7 @@
 ## 📝 Overview
 
 **Motivation:** <br>
-Early developmental stage fMRI data is limited. The project aims to calibrate a synthetic connectome, (using a probability of connection model that decays exponentially with distance between regions) and forces a fixed high density of the top 70% of connections to imitate highly dense infant connectomes. <br>
+Early developmental stage fMRI data is limited. The project aims to calibrate a synthetic connectome, (using a probability of connection model that decays exponentially with distance between regions) and forces a fixed high density of connections to imitate highly dense infant connectomes. <br>
 Followed by Kuramoto-Hebbian style pruning over a range of Kuramoto Coupling Strength values. <br>
 
 **The Project Asks:** <br>
@@ -105,7 +105,8 @@ python master.py
 python analysis.py
 ```
 
-Outputs are written to `Results/`. The first run downloads the Schaefer atlas and reference fMRI data so may take a few minutes.
+Outputs are written to `Results/`. The first run downloads the Schaefer atlas and reference fMRI data so may take a few minutes.<br>
+Parameters can be changed in (`config.py`) 
 
 
 ## Model Decisions
@@ -199,6 +200,21 @@ $$
    |number_of_k_values | 25 | Resolution of K sweep| none |
    
    </details>
+
+   ## Limitations
+
+   1 - The youngest participant in the Nilearn Developmental fMRI dataset is 12, not and infant so the graph metrics are off. To combat this, the strengths of connections were speculatively multiplied by a scaling factor of 10.
+   2 - Only 1 reference connectome is selected from the Developmental fMRI dataset due to memory constraints.
+   3 - The time scale of pruning is arbitrary. Model is aimed to have about 2 years of pruning but no time reference is implemented.
+   4 - Null comparison has not been implemented.
+   5 - Critical Coupling Constant is calculated from the eigenvalues of the initial matrix but it is realistically a dynamic variable.
+   6- Some model choices aren't fitted, just chosen.
+
+   ## Next Steps
+   > Implement the comparison to NT and SZ connectomes.
+   > Fit model to a time-scale with references and add time-scale parameter.
+   > Implement the real vs null check.
+   > Compute the Kuramoto order parameter r(t) and plot over K values.  
 
 
    ## References
