@@ -60,7 +60,7 @@ classDef hidden display:none;
 ## Results
 
 <details>
-<summary><b>Figure 1: Pruned Synthetic Connectomes over K range </b></summary>
+<summary><b>Figure 1: Pruned Synthetic Connectomes over K range</b></summary>
 
 <br>
 
@@ -68,14 +68,25 @@ classDef hidden display:none;
 
 </details>
 
-The clustering coefficient and path length change smoothly as K increases,
-with the largest shift near the critical coupling K_c.
-
-![Graph metrics across K](figures/fig1_K_sweep.png)
-
-*Figure 1: Path length, clustering, and density as coupling strength K increases.*
-
-At low K, the network stays close to its initial structure. Above K_c, ...
+<table>
+  <tr>
+    <td align="center" valign="top" width="50%">
+        <b>Figure 2: Path length, Clustering Coefficient, and Density of results against Coupling Strength</b><br>
+      <img src="Display_Images/Graph_Metrics.png" width="380" alt="Graph metrics across K"><br>
+      <p align="left">
+        For majority of K values, there is no significant change of any metric.
+At values of K much higher than the critical coupling constant, path length decreases while density and clustering coefficient increase.
+      </p>
+    </td>
+    <td align="center" valign="top" width="50%">
+        <b>Figure 3: RMSD to the ASD reference</b><br>
+      <img src="Display_Images/RMSD_ASD.png" width="380" alt="RMSD to ASD reference across K"><br>
+      <p align="left">
+        As K increases, the pruned synthetic connectome's graph metrics get overall closer to those of the ASD reference connectome.
+      </p>
+    </td>
+  </tr>
+</table>
 
 ## 🌟 Quick Start
 
@@ -125,7 +136,9 @@ $$
 
 
 ### Coupling Strength
- $K_c = \sigma \sqrt{8 / \pi} / \lambda_{max}$
+ $$
+ K_c = \sigma \sqrt{8 / \pi} / \lambda_{max}
+ $$
 
  [[3]](#3)
 
