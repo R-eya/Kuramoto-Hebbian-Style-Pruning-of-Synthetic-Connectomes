@@ -32,10 +32,11 @@ class Connectome_Generator:
         self.distance_matrix = cdist(self.roi_coordinates, self.roi_coordinates, metric='euclidean')
         return self.distance_matrix    
 
-    # Below Means you can call this function without creating an instance of the class
-    # so like turns it into a normal fn
     @staticmethod
     def graph_metrics(bin_matrix):
+        """
+        Returns mean path length, clustering coefficient and density of netowkk.
+        """
         path_dist = bct.distance_bin(bin_matrix)
         L, _, _, _, _ = bct.charpath(path_dist)
         C = np.mean(bct.clustering_coef_bu(bin_matrix))
@@ -43,12 +44,18 @@ class Connectome_Generator:
         return L, C, D
 
     def connection_probability(self, d_0):
+        """
+        Returns matrix of weights between ROIs - exponential decay with distance.
+        """
         if d_0 <= 0:
             return np.zeros_like(self.distance_matrix)
   
         return self.cgf.scaling_factor * np.exp(- self.distance_matrix / d_0)
 
     def noise_symmetric(self, d_0, rng): 
+        """
+        Adds noise to connectome and makes it symmetric.
+        """
         P_mat = self.connection_probability(d_0)  
         noise = rng.normal(loc= self.cgf.noise_loc, scale=self.cgf.noise_scale, size=P_mat.shape) 
         noisey_P = P_mat + noise
@@ -57,6 +64,9 @@ class Connectome_Generator:
         return W
 
     def reference_metrics(self, dataset=None):
+        """
+        Returns graph metrics for a connectome fetched from dataset.
+        """
         if dataset == None:
             dataset = datasets.fetch_development_fmri(n_subjects = 1, age_group = 'child', data_dir=self.data_dir)
         masker = NiftiLabelsMasker(labels_img=self.map_filepath, 
@@ -84,7 +94,11 @@ class Connectome_Generator:
 
 
     def d_0_Sweep(self, rng):
-
+        """
+        Minimised RMSD for graph metrics between reference connectome 
+        and synthetic connetome over range of d_0 values.
+        Returns the argmax.
+        """
         RMSD = np.inf
         d_0_best = 0
 

@@ -53,6 +53,10 @@ class Analysis:
         plt.close()
 
     def Compare_ASD(self):
+        """
+        Fetches ASD connectomes from ABIDE dataset.
+        Calculates the mean graph metrics.
+        """
         abide = datasets.fetch_abide_pcp(
             n_subjects = 5,
             pipeline="cpac",
@@ -136,6 +140,9 @@ class Analysis:
 
 
     def compare_rmsd(self):
+        """
+        Calculates RMSD between reference connectomes and results (over K range).
+        """
         self.load_atlas()          
         self.euclidean_dist()
         self.results_graph_metrics()
